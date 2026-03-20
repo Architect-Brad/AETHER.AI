@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#00f3ff">
+<title>AETHER Neural Interface — Product Hub</title>
+<style>
+:root{--bg:#020308;--s1:#04050c;--cyan:#00f3ff;--green:#00ff88;--gold:#ffd700;--purple:#9b59b6;--red:#e74c3c;--text:#c8d8e8;--dim:#445566;--dimmer:#223344;--border:#0d1525;--mono:'Courier New',Consolas,monospace;--sans:'Segoe UI',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:15px;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;}
+a{color:var(--cyan);text-decoration:none;}a:hover{text-decoration:underline;}
+button{font-family:inherit;cursor:pointer;}code{font-family:var(--mono);}
+
+/* NAV — works in all WebViews */
+nav{position:sticky;top:0;z-index:9999;background:rgba(2,3,8,.97);border-bottom:1px solid rgba(0,243,255,.08);}
+.nav-top{display:flex;align-items:center;height:50px;padding:0 14px;gap:8px;}
+.nav-brand{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-weight:700;font-size:.82rem;color:var(--cyan);letter-spacing:2px;flex-shrink:0;}
+.nav-brand img{width:18px;height:18px;border-radius:3px;}
+.nav-launch{margin-left:auto;background:rgba(0,243,255,.1);border:1px solid rgba(0,243,255,.35);color:var(--cyan);font-family:var(--mono);font-size:.62rem;font-weight:700;letter-spacing:1px;padding:5px 11px;border-radius:3px;flex-shrink:0;}
+.nav-tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--border);background:rgba(2,3,6,.98);}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.nt{display:inline-flex;align-items:center;padding:10px 14px;font-family:var(--mono);font-size:.62rem;letter-spacing:.3px;color:var(--dim);background:none;border:none;border-bottom:2px solid transparent;white-space:nowrap;transition:all .14s;flex-shrink:0;}
+.nt:hover{color:#99aabb;}
+.nt.on{color:var(--cyan);border-bottom-color:var(--cyan);}
+
+/* PAGES */
+.pg{display:none;}.pg.on{display:block;}
+
+/* SHARED */
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px;}
+.wrap-sm{max-width:800px;margin:0 auto;padding:0 20px;}
+.sec{padding:60px 0;}
+.sec-sm{padding:36px 0;}
+.divider{border:none;border-top:1px solid var(--border);}
+@media(max-width:768px){.sec{padding:40px 0;}.sec-sm{padding:26px 0;}.wrap,.wrap-sm{padding:0 14px;}}
+.lbl{font-family:var(--mono);font-size:.54rem;letter-spacing:4px;color:var(--cyan);opacity:.52;text-transform:uppercase;margin-bottom:7px;}
+.h2{font-size:clamp(1.5rem,4vw,2.4rem);font-weight:800;letter-spacing:-1px;color:#e0ecf8;line-height:1.1;margin-bottom:9px;}
+.sub{font-size:.82rem;color:var(--dim);line-height:1.85;}
+.tag{display:inline-block;font-family:var(--mono);font-size:.53rem;font-weight:700;padding:2px 6px;border-radius:2px;border:1px solid;}
+.tg{color:#00cc66;background:rgba(0,255,136,.08);border-color:rgba(0,255,136,.2);}
+.tc{color:var(--cyan);background:rgba(0,243,255,.07);border-color:rgba(0,243,255,.18);}
+.tp{color:#c07de8;background:rgba(155,89,182,.08);border-color:rgba(155,89,182,.2);}
+.btn-p{background:rgba(0,243,255,.1);border:1px solid var(--cyan);color:var(--cyan);font-family:var(--mono);font-size:.68rem;font-weight:700;letter-spacing:1.5px;padding:9px 20px;border-radius:3px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;transition:all .18s;}
+.btn-p:hover{background:rgba(0,243,255,.18);text-decoration:none;}
+.btn-s{background:transparent;border:1px solid #1e2535;color:#667788;font-family:var(--mono);font-size:.68rem;letter-spacing:1.5px;padding:9px 20px;border-radius:3px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;transition:all .18s;}
+.btn-s:hover{border-color:#334;color:#99aabb;text-decoration:none;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* HERO — no min-height, renders immediately */
+.hero{padding:52px 20px 44px;text-align:center;position:relative;}
+.eyebrow{font-family:var(--mono);font-size:.53rem;letter-spacing:5px;color:var(--cyan);opacity:.5;margin-bottom:10px;}
+.hero-title{font-size:clamp(3.5rem,14vw,8rem);font-weight:900;letter-spacing:-4px;line-height:.9;margin-bottom:10px;color:var(--cyan);}
+.hero-sub{font-size:clamp(.8rem,2vw,.98rem);color:var(--dim);max-width:500px;margin:0 auto 22px;line-height:1.85;font-family:var(--mono);}
+.hero-sub em{color:var(--cyan);font-style:normal;}
+.badge-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:22px;}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 6px;border-radius:20px;font-family:var(--mono);font-size:.55rem;border:1px solid;}
+.badge svg{width:13px;height:13px;flex-shrink:0;}
+.bq{background:rgba(0,255,136,.06);border-color:rgba(0,255,136,.22);color:#00cc66;}
+.bgpl{background:rgba(0,243,255,.05);border-color:rgba(0,243,255,.2);color:var(--cyan);}
+
+/* TERMINAL */
+.term{max-width:min(600px,96%);margin:0 auto;background:#020308;border:1px solid #0d1525;border-radius:7px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.6);}
+.tbar{display:flex;align-items:center;gap:5px;padding:7px 11px;background:#03040a;border-bottom:1px solid #0d1525;}
+.tdot{width:8px;height:8px;border-radius:50%;}
+.tlbl{font-family:var(--mono);font-size:.55rem;color:#334455;margin-left:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tbody{padding:12px 14px;font-family:var(--mono);font-size:.68rem;line-height:1.88;text-align:left;}
+.cd{color:#334455;}.cp{color:var(--cyan);}.cc{color:#ccd;}.cg{color:var(--green);}.ct{color:#3a4555;font-style:italic;}
+.cur{display:inline-block;width:6px;height:11px;background:var(--cyan);animation:blink .8s step-end infinite;vertical-align:middle;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* STATS */
+.stats-row{display:flex;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(5,6,14,.7);}
+.stat{flex:1;min-width:78px;padding:15px 9px;text-align:center;border-right:1px solid var(--border);}
+.stat:last-child{border-right:none;}
+.stat-n{font-family:var(--mono);font-size:clamp(1rem,3.5vw,1.8rem);font-weight:700;color:var(--cyan);letter-spacing:-1px;display:block;margin-bottom:2px;}
+.stat-l{font-size:.54rem;color:var(--dim);font-family:var(--mono);}
+
+/* CHARTS */
+.chart-wrap{background:var(--s1);border:1px solid var(--border);border-radius:7px;padding:20px;margin-top:28px;}
+.chart-title{font-family:var(--mono);font-size:.68rem;color:#99aabb;margin-bottom:14px;font-weight:700;}
+.bar-chart{display:flex;flex-direction:column;gap:8px;}
+.bar-row{display:flex;align-items:center;gap:8px;}
+.bar-label{font-family:var(--mono);font-size:.6rem;color:var(--dim);width:140px;flex-shrink:0;text-align:right;}
+.bar-track{flex:1;background:rgba(255,255,255,.04);border-radius:2px;height:18px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;display:flex;align-items:center;padding-left:7px;font-family:var(--mono);font-size:.56rem;font-weight:700;transition:width 1.2s cubic-bezier(.22,1,.36,1);}
+.bar-val{font-family:var(--mono);font-size:.58rem;color:var(--dim);width:36px;flex-shrink:0;}
+@media(max-width:600px){.bar-label{width:80px;font-size:.53rem;}}
+
+/* SHOWCASE / DEMO */
+.showcase{background:var(--s1);border:1px solid rgba(0,243,255,.1);border-radius:8px;overflow:hidden;margin-top:28px;}
+.sc-tabs{display:flex;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;}
+.sc-tabs::-webkit-scrollbar{display:none;}
+.sc-tab{padding:10px 14px;font-family:var(--mono);font-size:.6rem;color:var(--dim);background:none;border:none;border-bottom:2px solid transparent;white-space:nowrap;transition:all .13s;flex-shrink:0;}
+.sc-tab.on{color:var(--cyan);border-bottom-color:var(--cyan);}
+.sc-body{padding:18px;display:none;}
+.sc-body.on{display:block;}
+.sc-step{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
+.sc-num{width:22px;height:22px;min-width:22px;border-radius:50%;background:rgba(0,243,255,.1);border:1px solid rgba(0,243,255,.2);font-family:var(--mono);font-size:.56rem;color:var(--cyan);display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.sc-text{font-size:.72rem;color:#778899;line-height:1.72;}
+.sc-text strong{color:#b0c8e0;}
+.sc-code{background:#030408;border:1px solid var(--border);border-radius:4px;padding:8px 11px;font-family:var(--mono);font-size:.67rem;color:#99aabb;margin:6px 0;line-height:1.65;}
+.sc-result{background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.1);border-radius:4px;padding:8px 11px;font-family:var(--mono);font-size:.67rem;color:#00cc66;margin-top:6px;line-height:1.65;}
+
+/* COMPARISON */
+.comp-wrap{overflow-x:auto;margin-top:22px;}
+.comp-table{width:100%;min-width:540px;border-collapse:collapse;font-size:.72rem;}
+.comp-table th{background:#03040a;font-family:var(--mono);font-size:.56rem;letter-spacing:.4px;text-align:center;padding:8px 10px;border:1px solid var(--border);color:var(--dim);}
+.comp-table th:first-child{text-align:left;min-width:175px;}
+.comp-table th.hl{color:var(--cyan);background:rgba(0,243,255,.05);border-color:rgba(0,243,255,.14);}
+.comp-table td{padding:6px 10px;border:1px solid #060810;text-align:center;color:var(--dim);}
+.comp-table td:first-child{text-align:left;color:#99aabb;font-family:var(--mono);font-size:.67rem;}
+.comp-table tr:hover td{background:rgba(255,255,255,.01);}
+.yes{color:var(--green);font-weight:700;}.no{color:#2a3540;}.part{color:var(--gold);}
+
+/* FEATURES */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:9px;margin-top:28px;}
+.fc{background:var(--s1);border:1px solid var(--border);border-radius:7px;padding:18px;position:relative;overflow:hidden;transition:all .2s;}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--fa,var(--cyan)),transparent);opacity:0;transition:opacity .3s;}
+.fc:hover{border-color:rgba(0,243,255,.1);transform:translateY(-2px);}.fc:hover::before{opacity:1;}
+.fi{width:32px;height:32px;display:grid;place-items:center;background:rgba(0,243,255,.06);border:1px solid rgba(0,243,255,.1);border-radius:5px;margin-bottom:9px;color:var(--cyan);}
+.fi svg{width:15px;height:15px;}.ft{font-size:.8rem;font-weight:700;color:#e0ecf8;margin-bottom:4px;}.fd{font-size:.68rem;color:var(--dim);line-height:1.7;}
+.ftag{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:.51rem;color:var(--cyan);background:rgba(0,243,255,.07);border:1px solid rgba(0,243,255,.11);border-radius:2px;padding:2px 5px;}
+
+/* QWEN */
+.qbox{background:linear-gradient(135deg,rgba(0,255,136,.03),transparent);border:1px solid rgba(0,255,136,.09);border-radius:8px;padding:28px;margin-top:28px;}
+@media(max-width:700px){.qbox{padding:18px 14px;}}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
+@media(max-width:680px){.qgrid{grid-template-columns:1fr;}.hexwrap{display:none;}}
+.qml{display:flex;flex-direction:column;gap:4px;margin-top:11px;}
+.qm{display:flex;align-items:center;justify-content:space-between;padding:5px 9px;background:rgba(0,255,136,.04);border:1px solid rgba(0,255,136,.07);border-radius:3px;font-family:var(--mono);font-size:.61rem;transition:all .15s;}
+.qm:hover{border-color:rgba(0,255,136,.2);}.qn{color:#00cc66;font-weight:700;}.qtags{display:flex;gap:3px;}
+.qtag{font-size:.5rem;padding:1px 4px;border-radius:2px;}
+.qt-m{background:rgba(155,89,182,.15);color:#c07de8;border:1px solid rgba(155,89,182,.2);}
+.qt-c{background:rgba(0,180,255,.1);color:#60c0ff;border:1px solid rgba(0,180,255,.15);}
+.qt-t{background:rgba(255,196,0,.1);color:#ffcc00;border:1px solid rgba(255,196,0,.15);}
+.qt-n{background:rgba(255,0,170,.1);color:#ff66cc;border:1px solid rgba(255,0,170,.2);}
+.hexwrap{display:grid;place-items:center;}
+.hexwrap svg{width:min(160px,35vw);filter:drop-shadow(0 0 18px rgba(0,255,136,.16));}
+
+/* PROVIDERS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:6px;margin-top:20px;}
+.pcard{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px 9px;background:var(--s1);border:1px solid var(--border);border-radius:5px;transition:all .15s;position:relative;}
+.pcard:hover{border-color:rgba(255,255,255,.07);transform:translateY(-1px);}
+.pcard.pref{border-color:rgba(0,255,136,.16);}
+.pcard.pref::after{content:'★';position:absolute;top:4px;right:6px;font-size:.4rem;color:#00cc66;}
+.pcard-logo{width:26px;height:26px;display:grid;place-items:center;overflow:hidden;border-radius:5px;}
+.pcard-logo img{width:26px;height:26px;object-fit:contain;border-radius:4px;}
+.pcard-name{font-family:var(--mono);font-size:.52rem;color:#778899;text-align:center;}
+
+/* ROADMAP */
+.rm-wrap{margin-top:28px;position:relative;}
+.rm-wrap::before{content:'';position:absolute;left:17px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--cyan),var(--purple),transparent);opacity:.15;}
+.rm-item{display:flex;gap:14px;margin-bottom:22px;}
+.rm-dot{width:34px;height:34px;min-width:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;border:1px solid;font-family:var(--mono);font-weight:700;position:relative;z-index:1;}
+.rm-dot.done{background:rgba(0,255,136,.08);border-color:rgba(0,255,136,.25);color:var(--green);}
+.rm-dot.now{background:rgba(0,243,255,.07);border-color:rgba(0,243,255,.25);color:var(--cyan);animation:rmspn 2s linear infinite;}
+.rm-dot.soon{background:rgba(155,89,182,.05);border-color:rgba(155,89,182,.2);color:#c07de8;}
+@keyframes rmspn{0%,100%{box-shadow:none}50%{box-shadow:0 0 10px rgba(0,243,255,.3)}}
+.rm-body{padding-top:5px;}.rm-title{font-size:.78rem;font-weight:700;color:#c8dcf0;margin-bottom:2px;}.rm-desc{font-size:.68rem;color:var(--dim);line-height:1.65;}
+.rm-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;}
+
+/* DOCS */
+.docs-layout{display:flex;min-height:600px;}
+.dsb{width:200px;min-width:200px;background:var(--s1);border-right:1px solid var(--border);position:sticky;top:86px;height:calc(100vh - 86px);overflow-y:auto;padding:10px 0;flex-shrink:0;scrollbar-width:thin;scrollbar-color:#1e2535 transparent;}
+.dsb::-webkit-scrollbar{width:3px;}.dsb::-webkit-scrollbar-thumb{background:#1e2535;}
+@media(max-width:860px){.dsb{display:none;}}
+.ds-sec{padding:3px 12px 1px;font-family:var(--mono);font-size:.47rem;letter-spacing:3px;color:#182030;text-transform:uppercase;margin-top:7px;}
+.ds-a{display:block;padding:4px 12px;font-size:.64rem;color:#445566;text-decoration:none;font-family:var(--mono);border-left:2px solid transparent;transition:all .11s;line-height:1.45;}
+.ds-a:hover{color:#99aabb;border-color:#334;text-decoration:none;}.ds-a.on{color:var(--cyan);border-color:var(--cyan);background:rgba(0,243,255,.03);}
+.ds-a.pr{color:#338855;}.ds-a.pr.on,.ds-a.pr:hover{color:#00cc66;border-color:#00cc66;}
+.dmain{flex:1;padding:28px 36px 72px;max-width:760px;min-width:0;}
+@media(max-width:860px){.dmain{padding:20px 14px 52px;max-width:100%;}}
+.dmain h1{font-size:1.7rem;font-weight:900;letter-spacing:-1px;color:#e8f4ff;margin-bottom:5px;}
+.dmain h2{font-size:1.15rem;font-weight:800;color:#d0e8f8;margin:36px 0 8px;padding-top:12px;border-top:1px solid var(--border);scroll-margin-top:90px;}
+.dmain h2.nb{border-top:none;margin-top:14px;}.dmain h3{font-size:.9rem;font-weight:700;color:#b0c8e0;margin:15px 0 5px;scroll-margin-top:90px;}
+.dmain h4{font-size:.77rem;font-weight:700;color:#8899aa;margin:10px 0 4px;font-family:var(--mono);}
+.dmain p{font-size:.76rem;line-height:1.88;color:#778899;margin-bottom:8px;}.dmain strong{color:#b0c8e0;}
+.dmain code{font-family:var(--mono);font-size:.72rem;background:#030408;border:1px solid var(--border);border-radius:3px;padding:1px 4px;color:#a0d0f0;}
+.pblock{background:#030408;border:1px solid var(--border);border-radius:5px;overflow:hidden;margin:8px 0;}
+.pblock-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 12px;background:#03040a;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.56rem;color:var(--dim);}
+.pblock-copy{background:transparent;border:1px solid #1e2535;color:#445;font-family:var(--mono);font-size:.52rem;padding:2px 6px;border-radius:2px;transition:all .13s;}
+.pblock-copy:hover{border-color:var(--cyan);color:var(--cyan);}
+.pblock pre{padding:11px;margin:0;}.pblock pre code{background:none;border:none;padding:0;font-size:.7rem;line-height:1.68;display:block;overflow-x:auto;color:#99aabb;}
+.dmain ul,.dmain ol{padding-left:16px;margin-bottom:8px;}
+.dmain li{font-size:.74rem;line-height:1.8;color:#778899;margin-bottom:2px;}.dmain li strong{color:#b0c8e0;}
+.dtable{width:100%;border-collapse:collapse;margin:8px 0;font-size:.68rem;display:block;overflow-x:auto;}
+.dtable th{background:#030408;color:#778899;font-family:var(--mono);font-size:.56rem;text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);white-space:nowrap;}
+.dtable td{padding:5px 8px;border-bottom:1px solid #060810;color:#667788;}
+.dtable tr:hover td{background:rgba(0,243,255,.01);}
+.pr-row td{color:#448855!important;}.pr-row td:first-child{color:#00cc66!important;font-weight:700;}
+.co{padding:9px 12px;border-radius:4px;margin:10px 0;font-size:.73rem;line-height:1.7;}
+.co-g{background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.13);color:#559966;}
+.co-i{background:rgba(0,243,255,.05);border:1px solid rgba(0,243,255,.13);color:#6699bb;}
+.co-w{background:rgba(255,196,0,.05);border:1px solid rgba(255,196,0,.13);color:#aa8800;}
+.co-r{background:rgba(231,76,60,.05);border:1px solid rgba(231,76,60,.13);color:#c06060;}
+
+/* FAQ */
+.fwrap{max-width:720px;margin:0 auto;padding:36px 18px 60px;}
+@media(max-width:600px){.fwrap{padding:26px 12px 44px;}}
+.fsearch{width:100%;background:var(--s1);border:1px solid #1e2535;border-radius:4px;color:var(--text);font-family:var(--mono);font-size:.74rem;padding:8px 12px;outline:none;transition:border-color .18s;margin-bottom:11px;}
+.fsearch:focus{border-color:var(--cyan);}
+.fcats{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px;}
+.fcat{background:transparent;border:1px solid #1e2535;color:var(--dim);font-family:var(--mono);font-size:.54rem;padding:3px 8px;border-radius:20px;transition:all .12s;}
+.fcat:hover{border-color:#334;color:#99aabb;}.fcat.on{border-color:var(--cyan);color:var(--cyan);background:rgba(0,243,255,.05);}
+.flist{display:flex;flex-direction:column;gap:2px;}
+.fitem{border:1px solid var(--border);border-radius:3px;overflow:hidden;}.fitem.hidden{display:none;}
+.fq{width:100%;background:#03040a;border:none;text-align:left;padding:9px 12px;font-family:var(--mono);font-size:.68rem;color:#778899;display:flex;align-items:center;justify-content:space-between;gap:7px;transition:all .11s;}
+.fq:hover,.fq.on{background:#04050c;color:#99aabb;}.fq.on{color:var(--cyan);}
+.fctag{font-size:.49rem;padding:1px 5px;border-radius:2px;flex-shrink:0;}
+.farr{font-size:.56rem;flex-shrink:0;transition:transform .2s;color:var(--dim);}
+.fq.on .farr{transform:rotate(180deg);color:var(--cyan);}
+.fans{max-height:0;overflow:hidden;transition:max-height .28s ease;}
+.fans-inner{padding:9px 12px;font-size:.7rem;color:#668899;line-height:1.75;border-top:1px solid var(--border);}
+.fans-inner code{font-family:var(--mono);font-size:.67rem;background:#030408;border:1px solid var(--border);border-radius:2px;padding:1px 4px;color:#a0d0f0;}
+.fans-inner pre{background:#030408;border:1px solid var(--border);border-radius:4px;padding:8px;margin:6px 0;font-family:var(--mono);font-size:.65rem;overflow-x:auto;line-height:1.62;color:#99aabb;}
+.fans-inner a{color:var(--cyan);}.fempty{text-align:center;padding:24px;font-family:var(--mono);font-size:.68rem;color:var(--dim);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;}
+@media(max-width:520px){footer{padding:14px;flex-direction:column;text-align:center;}}
+.fl{font-family:var(--mono);font-size:.56rem;color:var(--dimmer);}
+.flinks{display:flex;gap:12px;flex-wrap:wrap;}.flinks a{color:#334455;font-family:var(--mono);font-size:.55rem;cursor:pointer;transition:color .18s;}.flinks a:hover{color:var(--cyan);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-top">
+    <div class="nav-brand" onclick="S('home')" style="cursor:pointer">
+      <img src="logo.svg" alt="⬡" onerror="this.style.display='none'">
+      AETHER
+    </div>
+    <a class="nav-launch" href="index.html">LAUNCH →</a>
+  </div>
+  <div class="nav-tabs">
+    <button class="nt on" id="t-home" onclick="S('home')">Home</button>
+    <button class="nt" id="t-features" onclick="S('features')">Features</button>
+    <button class="nt" id="t-showcase" onclick="S('showcase')">Showcase</button>
+    <button class="nt" id="t-docs" onclick="S('docs')">Docs</button>
+    <button class="nt" id="t-faq" onclick="S('faq')">FAQ <span style="opacity:.5;font-size:.5rem">(100)</span></button>
+    <button class="nt" id="t-roadmap" onclick="S('roadmap')">Roadmap</button>
+  </div>
+</nav>
+
+<!-- ══ HOME ══ -->
+<div class="pg on" id="pg-home">
+<section class="hero">
+  <div>
+    <div class="badge-row">
+      <span class="badge bq"><svg viewBox="0 0 36 36" fill="none" width="13" height="13"><path d="M18 3L31 10 31 26 18 33 5 26 5 10Z" stroke="#00ff88" stroke-width="1.5"/><circle cx="18" cy="17" r="3" fill="#00ff88"/></svg>Qwen 3.5 Native · 262K ctx · Thinking</span>
+      <span class="badge bgpl">⚖ GNU GPL-3.0</span>
+    </div>
+    <p class="eyebrow">NEURAL INTERFACE v5.14</p>
+    <h1 class="hero-title">AETHER</h1>
+    <p class="hero-sub">Open-source AI interface. <em>No backend.</em> No account. No cost.<br>Local models · 19 providers · Browser automation · Agent Mode · 17 tools.</p>
+    <div class="btn-row" style="justify-content:center;margin-bottom:28px">
+      <a href="index.html" class="btn-p">LAUNCH APP</a>
+      <a href="https://github.com/architect-brad/AETHER.AI" target="_blank" class="btn-s">★ GitHub</a>
+      <button class="btn-s" onclick="S('showcase')">Showcase →</button>
+    </div>
+    <div class="term">
+      <div class="tbar"><div class="tdot" style="background:#ff5f57"></div><div class="tdot" style="background:#febc2e"></div><div class="tdot" style="background:#28c840"></div><span class="tlbl">AETHER · qwen3.5-9b · ⬡ Agent Mode · ⌨ Coding · 🌐 Browser Agent</span></div>
+      <div class="tbody"><span class="cd">// 262K ctx · Agent Mode · 17 tools · Whisper.js offline · GPL-3.0</span><br><br><span class="cp">USER › </span><span class="cc">Research the top 3 open issues in our repo and create a sprint plan</span><br><br><span class="ct">⟨agent:plan⟩ 1. gitlab_issues → 2. prioritise → 3. browser_agent → 4. report⟨/agent:plan⟩</span><br><br><span class="cg">AETHER › </span><span class="cc">Step 1/4 — querying issues… found 14. Step 2/4 — prioritised 3 critical.<br>Step 3/4 — launching browser agent to create Notion sprint…</span><br><span class="cd">⬡ Agent: 3/10 steps · 4 tools used</span><span class="cur"></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-row">
+  <div class="stat"><span class="stat-n">22</span><span class="stat-l">Providers</span></div>
+  <div class="stat"><span class="stat-n">21</span><span class="stat-l">Tools</span></div>
+  <div class="stat"><span class="stat-n">262K</span><span class="stat-l">Qwen3.5 Ctx</span></div>
+  <div class="stat"><span class="stat-n">v1</span><span class="stat-l">Agent Mode</span></div>
+  <div class="stat"><span class="stat-n">0</span><span class="stat-l">Telemetry</span></div>
+  <div class="stat"><span class="stat-n">GPL</span><span class="stat-l">Free Forever</span></div>
+</div>
+
+<!-- COMPARISON -->
+<section class="sec"><div class="wrap">
+  <div class="lbl">Honest comparison</div>
+  <h2 class="h2">AETHER vs the alternatives.</h2>
+  <p class="sub" style="max-width:520px">We've tried to be accurate — including where competitors are good. These reflect public knowledge as of March 2026.</p>
+  <div class="comp-wrap"><table class="comp-table">
+    <thead><tr><th>Feature</th><th class="hl">⬡ AETHER</th><th>OpenClaw</th><th>ChatGPT Web</th><th>Claude.ai</th><th>Open WebUI</th></tr></thead>
+    <tbody>
+      <tr><td>License</td><td class="hl yes">GPL-3.0</td><td class="part">Custom Open</td><td class="no">Proprietary</td><td class="no">Proprietary</td><td class="yes">Apache 2.0</td></tr>
+      <tr><td>Backend required</td><td class="hl yes">None</td><td class="no">Yes (Node)</td><td class="no">Yes (server)</td><td class="no">Yes (server)</td><td class="no">Yes (Python)</td></tr>
+      <tr><td>Local model support</td><td class="hl yes">✓ Full</td><td class="yes">✓ Full</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓ Full</td></tr>
+      <tr><td>API key storage</td><td class="hl yes">AES-256-GCM</td><td class="part">Env vars</td><td class="no">Server-side</td><td class="no">Server-side</td><td class="part">Env vars</td></tr>
+      <tr><td>Qwen 3.5 native (262K)</td><td class="hl yes">✓ Full</td><td class="part">Generic only</td><td class="no">✗</td><td class="no">✗</td><td class="part">Generic only</td></tr>
+      <tr><td>Adaptive Thinking stream</td><td class="hl yes">✓ Live</td><td class="no">✗</td><td class="no">✗</td><td class="part">Partial</td><td class="no">✗</td></tr>
+      <tr><td>Agent Mode</td><td class="hl yes">✓ v1 built-in</td><td class="part">Via plugins</td><td class="part">Limited</td><td class="no">✗</td><td class="part">Via plugins</td></tr>
+      <tr><td>Browser automation</td><td class="hl yes">Browser Use + PW</td><td class="no">✗</td><td class="part">Limited</td><td class="no">✗</td><td class="no">✗</td></tr>
+      <tr><td>Tool calling</td><td class="hl yes">21 tools, 3 syntaxes</td><td class="part">Some</td><td class="part">Some</td><td class="part">Some</td><td class="part">Basic</td></tr>
+      <tr><td>Offline STT</td><td class="hl yes">Whisper.js + Vosk</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="part">Limited</td></tr>
+      <tr><td>Coding Mode + Console</td><td class="hl yes">✓ Full dev env</td><td class="part">Basic</td><td class="no">✗</td><td class="no">✗</td><td class="part">Basic</td></tr>
+      <tr><td>Background tasks</td><td class="hl yes">✓ + push notif</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+      <tr><td>Workspace memory</td><td class="hl yes">FS + diff + search</td><td class="part">Basic</td><td class="no">✗</td><td class="no">✗</td><td class="part">Basic</td></tr>
+      <tr><td>Telemetry</td><td class="hl yes">None</td><td class="yes">None</td><td class="no">Extensive</td><td class="no">Extensive</td><td class="part">Optional</td></tr>
+      <tr><td>Multi-modal (image+text)</td><td class="hl part">Via Moondream2</td><td class="part">Via API</td><td class="yes">✓ Native</td><td class="yes">✓ Native</td><td class="part">Via API</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-family:var(--mono);font-size:.57rem;color:#334;margin-top:10px">OpenClaw: open-source, privacy-respecting, no telemetry — genuine competition. We differ primarily in architecture (AETHER needs no server) and preferred models.</p>
+</div></section>
+<hr class="divider">
+
+<!-- CHARTS -->
+<section class="sec"><div class="wrap">
+  <div class="lbl">By the numbers</div>
+  <h2 class="h2">Context window comparison.</h2>
+  <p class="sub" style="max-width:480px">AETHER's preferred models offer some of the largest context windows available — free on local hardware.</p>
+  <div class="chart-wrap">
+    <div class="chart-title">Context window size (tokens) — preferred models</div>
+    <div class="bar-chart" id="ctx-chart"></div>
+  </div>
+  <div class="chart-wrap" style="margin-top:14px">
+    <div class="chart-title">Tool ecosystem — built-in tools per platform</div>
+    <div class="bar-chart" id="tools-chart"></div>
+  </div>
+</div></section>
+<hr class="divider">
+
+<!-- PROVIDERS -->
+<section class="sec-sm"><div class="wrap">
+  <div class="lbl">22 Providers</div>
+  <p style="font-size:.73rem;color:var(--dim);margin-bottom:4px">Official logos · Auto-endpoint · Auth detection · Qwen + DeepSeek marked ★ preferred</p>
+  <div class="pgrid" id="prov-grid"></div>
+</div></section>
+<hr class="divider">
+
+<!-- DOWNLOAD -->
+<section class="sec"><div class="wrap" style="text-align:center">
+  <div class="lbl">Download</div>
+  <h2 class="h2">One click. All files.</h2>
+  <p class="sub" style="max-width:440px;margin:0 auto 18px">File System Access API downloads all files from GitHub into an <code>AETHER/</code> folder on your machine.</p>
+  <button class="btn-p" id="dl-btn" onclick="downloadRelease()" style="margin-bottom:8px;font-size:.74rem;padding:11px 24px">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    DOWNLOAD AETHER
+  </button>
+  <p style="font-family:var(--mono);font-size:.54rem;color:#334;margin-bottom:9px">Chrome/Edge 86+ · File System Access API</p>
+  <div id="dl-progress" style="display:none;max-width:400px;margin:11px auto;background:#03040a;border:1px solid #0d1525;border-radius:4px;padding:11px">
+    <div id="dl-status" style="font-family:var(--mono);font-size:.65rem;color:var(--cyan);margin-bottom:5px">Initializing…</div>
+    <div style="background:#030408;border-radius:2px;height:3px;overflow:hidden;margin:6px 0"><div id="dl-bar" style="height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));width:0%;transition:width .3s"></div></div>
+    <div id="dl-files" style="font-family:var(--mono);font-size:.58rem;color:#334455;max-height:88px;overflow:auto;margin-top:4px"></div>
+  </div>
+  <div style="display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:11px">
+    <a href="https://github.com/architect-brad/AETHER.AI/archive/refs/heads/main.zip" target="_blank" class="btn-s" style="font-size:.61rem">↓ ZIP</a>
+    <a href="https://github.com/architect-brad/AETHER.AI/releases/latest" target="_blank" class="btn-s" style="font-size:.61rem">📦 Releases</a>
+  </div>
+</div></section>
+</div>
+
+<!-- ══ FEATURES ══ -->
+<div class="pg" id="pg-features">
+<section class="sec"><div class="wrap">
+  <div class="lbl">All capabilities</div>
+  <h2 class="h2">Everything AETHER ships with.</h2>
+  <div class="fgrid">
+    <div class="fc" style="--fa:#ffd700"><div class="fi" style="background:rgba(255,215,0,.07);border-color:rgba(255,215,0,.14);color:#ffd700"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><circle cx="19" cy="5" r="2" fill="currentColor" stroke="none"/></svg></div><div class="ft">Agent Mode v1 <span style="font-family:monospace;font-size:.48rem;color:#ffd700;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.2);padding:1px 5px;border-radius:2px;vertical-align:middle">NEW</span></div><div class="fd">Plan → Act → Evaluate → Retry. Configurable step limits (1–30), per-step approval gates, tool budget. Autonomous multi-step task execution with live log.</div><span class="ftag" style="color:#ffd700;background:rgba(255,215,0,.07);border-color:rgba(255,215,0,.14)">⬡ AUTONOMOUS</span></div>
+    <div class="fc" style="--fa:#c07de8"><div class="fi" style="background:rgba(192,125,232,.07);border-color:rgba(192,125,232,.14);color:#c07de8"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg></div><div class="ft">Whisper.js Offline STT <span style="font-family:monospace;font-size:.48rem;color:#c07de8;background:rgba(192,125,232,.1);border:1px solid rgba(192,125,232,.2);padding:1px 5px;border-radius:2px;vertical-align:middle">NEW</span></div><div class="fd">Fully local voice input via HuggingFace Transformers.js + WebGPU. No API key, no server. Auto-downloads once (~300MB), then runs offline forever.</div><span class="ftag" style="color:#c07de8;background:rgba(192,125,232,.07);border-color:rgba(192,125,232,.14)">OFFLINE</span></div>
+    <div class="fc" style="--fa:#9b59b6"><div class="fi" style="background:rgba(155,89,182,.07);border-color:rgba(155,89,182,.14);color:#9b59b6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg></div><div class="ft">Deep Research Mode</div><div class="fd">Multi-step: decompose → web_search → scrape/crawl → DB queries → synthesis. DeepSeek + Qwen3.5 preferred. Suggests model switch if needed.</div><span class="ftag" style="color:#9b59b6;background:rgba(155,89,182,.07);border-color:rgba(155,89,182,.14)">⚛ REASONING</span></div>
+    <div class="fc" style="--fa:#00ff88"><div class="fi" style="background:rgba(0,255,136,.06);border-color:rgba(0,255,136,.13);color:#00ff88"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2a3 3 0 0 0-3 3c-1.5 0-3 1.5-3 3a3 3 0 0 0 1 2.24A3 3 0 0 0 5 13a3.5 3.5 0 0 0 3.5 3.5c.17.5.75 1.5 2 1.5s1.83-1 2-1.5A3.5 3.5 0 0 0 16 13a3 3 0 0 0 .5-2.76A3 3 0 0 0 17.5 8c0-1.5-1.5-3-3-3a3 3 0 0 0-3-3h-2z"/></svg></div><div class="ft">Adaptive Thinking</div><div class="fd">Live &lt;think&gt; streaming with token counter. Qwen3.5 auto-injects <code>enable_thinking:true</code>. Collapsible reasoning blocks per message.</div><span class="ftag" style="color:#00ff88;background:rgba(0,255,136,.06);border-color:rgba(0,255,136,.13)">QWEN NATIVE</span></div>
+    <div class="fc" style="--fa:#00bcd4"><div class="fi" style="background:rgba(0,188,212,.07);border-color:rgba(0,188,212,.14);color:#00bcd4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="ft">Browser Automation</div><div class="fd">Browser Use or Playwright via local Python backend. AETHER controls real Chrome — fill forms, extract data, automate workflows.</div><span class="ftag" style="color:#00bcd4;background:rgba(0,188,212,.07);border-color:rgba(0,188,212,.14)">POWER USER</span></div>
+    <div class="fc"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div><div class="ft">17-Tool Engine</div><div class="fd">JSON / XML / shorthand parsers. OpenAI tool_calls. web_search, browser_agent, Slack, Notion, Hue, Jira, GitLab, Firecrawl, calculate.</div><span class="ftag">3 SYNTAXES</span></div>
+    <div class="fc" style="--fa:#ffd700"><div class="fi" style="background:rgba(255,215,0,.07);border-color:rgba(255,215,0,.14);color:#ffd700"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="ft">Background Mode</div><div class="fd">Queue tasks — Research, Summarise, Remind — that run while you work. Browser push notifications when done. No server required.</div><span class="ftag" style="color:#ffd700;background:rgba(255,215,0,.07);border-color:rgba(255,215,0,.14)">ASYNC</span></div>
+    <div class="fc" style="--fa:#ff7000"><div class="fi" style="background:rgba(255,112,0,.07);border-color:rgba(255,112,0,.14);color:#ff7000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="ft">Coding Mode</div><div class="fd">Named code blocks, live preview iframe, JS console (iframe error bridge), Piston execution, blob deploy (60s), AI fix, workspace save.</div><span class="ftag" style="color:#ff7000;background:rgba(255,112,0,.07);border-color:rgba(255,112,0,.14)">⌨ DEV</span></div>
+    <div class="fc"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="ft">AES-256 Encryption</div><div class="fd">Keys encrypted instantly. AES-256-GCM. PBKDF2 100K iterations. Zero plaintext. Password never leaves your device.</div><span class="ftag">ZERO PLAINTEXT</span></div>
+    <div class="fc"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div><div class="ft">TTS / Voice Output</div><div class="fd">Browser API, Kokoro 82M on-device (Transformers.js), or Piper local server. Speaker icon when active.</div><span class="ftag">3 ENGINES</span></div>
+    <div class="fc"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="ft">Workspace Memory</div><div class="fd">File System API or IndexedDB. Lazy context loading. Diff viewer, multi-file search, project templates. SYSTEM_PROMPT.mmd override.</div><span class="ftag">FILE SYSTEM</span></div>
+    <div class="fc"><div class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><div class="ft">22 API Providers</div><div class="fd">Qwen, DeepSeek, OpenAI, Anthropic, Google Gemini, Groq, xAI, Mistral, Cohere, OpenRouter, Kimi, Together, SiliconFlow, Perplexity, Meta AI, Copilot, Veo, Moondream2, FLUX.2, Nano Banana, Fireworks, Custom.</div><span class="ftag">22 PROVIDERS</span></div>
+  </div>
+
+  <!-- QWEN -->
+  <div style="margin-top:48px">
+    <div class="lbl">Preferred AI</div>
+    <h2 class="h2">Native Qwen 3 &amp; 3.5.</h2>
+    <p class="sub" style="max-width:490px">Purpose-engineered for Qwen — auto-detected, priority-badged, 262K context, thinking injection. Run free on your hardware.</p>
+    <div class="qbox">
+      <div class="qgrid">
+        <div>
+          <div class="lbl" style="margin-bottom:3px">QWEN 3.5 · Gated DeltaNet</div>
+          <h3 style="font-size:1.15rem;font-weight:800;color:#00ff88;margin-bottom:5px">262K ctx · MoE · Multimodal</h3>
+          <div class="qml">
+            <div class="qm"><span class="qn">qwen3.5-0.8b-instruct</span><div class="qtags"><span class="qtag qt-c">262K</span><span class="qtag qt-t">⚡</span></div></div>
+            <div class="qm"><span class="qn">qwen3.5-2b-instruct</span><div class="qtags"><span class="qtag qt-c">262K</span><span class="qtag qt-t">⚡</span></div></div>
+            <div class="qm"><span class="qn">qwen3.5-4b-instruct</span><div class="qtags"><span class="qtag qt-c">262K</span><span class="qtag qt-n">NEW</span></div></div>
+            <div class="qm"><span class="qn">qwen3.5-9b-instruct</span><div class="qtags"><span class="qtag qt-c">262K</span><span class="qtag qt-t">⚡</span></div></div>
+            <div class="qm"><span class="qn">qwen3.5-25b-instruct</span><div class="qtags"><span class="qtag qt-c">262K</span></div></div>
+            <div class="qm"><span class="qn">qwen3.5-35b-a3b-instruct</span><div class="qtags"><span class="qtag qt-m">MoE</span><span class="qtag qt-c">262K</span></div></div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="lbl" style="margin-bottom:3px">QWEN 3 · Dense</div>
+            <div class="qml">
+              <div class="qm"><span class="qn">qwen3-0.6b / 1.7b</span><div class="qtags"><span class="qtag qt-c">32K</span></div></div>
+              <div class="qm"><span class="qn">qwen3-4b / 8b</span><div class="qtags"><span class="qtag qt-c">128K</span></div></div>
+              <div class="qm"><span class="qn">qwen3-14b / 32b</span><div class="qtags"><span class="qtag qt-c">128K</span></div></div>
+              <div class="qm"><span class="qn">qwen3-235b-a22b</span><div class="qtags"><span class="qtag qt-m">MoE</span><span class="qtag qt-c">128K</span></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="hexwrap">
+          <svg viewBox="0 0 180 180" fill="none">
+            <path d="M90 10L158 50L158 130L90 170L22 130L22 50Z" stroke="#00ff88" stroke-width="1.5" opacity=".26"/>
+            <path d="M90 35L138 63L138 117L90 145L42 117L42 63Z" stroke="#00ff88" stroke-width="1.2" opacity=".43"/>
+            <path d="M90 57L120 74L120 106L90 123L60 106L60 74Z" stroke="#00ff88" stroke-width="1" opacity=".38"/>
+            <circle cx="90" cy="90" r="9" fill="rgba(0,255,136,.1)" stroke="#00ff88" stroke-width="1.5"/>
+            <circle cx="90" cy="90" r="4" fill="#00ff88"/>
+            <circle cx="90" cy="30" r="3.5" fill="#00ff88" opacity=".8"/><circle cx="141" cy="60" r="3.5" fill="#00ff88" opacity=".8"/>
+            <circle cx="141" cy="120" r="3.5" fill="#00ff88" opacity=".8"/><circle cx="90" cy="150" r="3.5" fill="#00ff88" opacity=".8"/>
+            <circle cx="39" cy="120" r="3.5" fill="#00ff88" opacity=".8"/><circle cx="39" cy="60" r="3.5" fill="#00ff88" opacity=".8"/>
+            <animateTransform attributeName="transform" type="rotate" from="0 90 90" to="360 90 90" dur="24s" repeatCount="indefinite" additive="sum"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<!-- ══ SHOWCASE ══ -->
+<div class="pg" id="pg-showcase">
+<section class="sec"><div class="wrap">
+  <div class="lbl">Simulated demos</div>
+  <h2 class="h2">AETHER doing real work.</h2>
+  <p class="sub" style="max-width:490px;margin-bottom:28px">These are representative walkthroughs of AETHER completing tasks autonomously. Tap each scenario to see how it works step-by-step.</p>
+
+  <div class="showcase">
+    <div class="sc-tabs">
+      <button class="sc-tab on" onclick="scSwitch(this,'sc-call')">📞 Call Mode</button>
+      <button class="sc-tab" onclick="scSwitch(this,'sc-agent')">⬡ Agent Mode</button>
+      <button class="sc-tab" onclick="scSwitch(this,'sc-flux')">🖼 FLUX.2 Images</button>
+      <button class="sc-tab" onclick="scSwitch(this,'sc-research')">⚛ Deep Research</button>
+      <button class="sc-tab" onclick="scSwitch(this,'sc-coding')">⌨ Coding Mode</button>
+      <button class="sc-tab" onclick="scSwitch(this,'sc-bg')">⏰ Scheduled Tasks</button>
+    </div>
+
+    <div class="sc-body on" id="sc-call">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:12px">📞 <em style="color:#99aabb">AETHER calls you for a morning check-in based on your workspace context</em></div>
+      <div class="sc-step"><div class="sc-num">1</div><div class="sc-text"><strong>Push notification appears</strong>
+        <div class="sc-code" style="border-color:rgba(0,188,212,.2)">🔔 "AETHER Calling…"
+AETHER wants to check in with you</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">2</div><div class="sc-text"><strong>Immersive call UI opens</strong> — pulsing rings, waveform, avatar
+        <div class="sc-code">AETHER: "Good morning. I checked your workspace — you have 3 open agent tasks and your sprint deadline is Friday. Want to review priorities?"</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">3</div><div class="sc-text"><strong>You speak — AETHER listens and responds</strong>
+        <div class="sc-code">You: "Yeah, what's the most urgent?"
+AETHER: "Issue #44 — the Agent Mode docs are blocking the v5.15 release. I can draft those now if you'd like."</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">4</div><div class="sc-text"><strong>Call ends — transcript saved to conversation</strong>
+        <div class="sc-result">✓ Call transcript: 4 exchanges saved · Duration: ~90s · Workspace context used</div>
+      </div></div>
+    </div>
+
+    <div class="sc-body" id="sc-flux">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:12px">🖼 <em style="color:#99aabb">"Generate an image of a Qwen neural network visualised as a cyberpunk hexagonal city"</em></div>
+      <div class="sc-step"><div class="sc-num">1</div><div class="sc-text"><strong>AETHER detects image request — sends to FLUX.2</strong>
+        <div class="sc-code">POST https://api.bfl.ml/v1/flux-schnell
+{ "prompt": "cyberpunk hexagonal city...", "width": 1024, "height": 768 }</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">2</div><div class="sc-text"><strong>Animated ring loader shows while generating</strong>
+        <div class="sc-code">⟳ Generating with FLUX.2…  [━━━━━━━━━━━━━━ 68%]
+Model: flux-schnell · ~3s generation time</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">3</div><div class="sc-text"><strong>Image displays inline in chat</strong>
+        <div class="sc-result">✓ Image generated and displayed · Actions: ↓ Save · ✏ Edit (inpainting) · ↺ Regen</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">4</div><div class="sc-text"><strong>Click ✏ Edit — describe changes for inpainting</strong>
+        <div class="sc-code">Edit: "Change the sky to a deep purple aurora"
+→ Sends updated prompt to FLUX.2 flux-dev model</div>
+      </div></div>
+    </div>
+
+    <div class="sc-body" id="sc-bg">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:12px">⏰ <em style="color:#99aabb">Scheduled task: "Every weekday at 08:00 — check RAM prices and write a summary report"</em></div>
+      <div class="sc-step"><div class="sc-num">1</div><div class="sc-text"><strong>Set up via BG panel → ⏰ Schedule</strong>
+        <div class="sc-code">Frequency: Weekdays | Time: 08:00
+Task: "Check current DDR5 RAM prices on newegg and amazon. Compare to last week. Write 3-bullet summary."</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">2</div><div class="sc-text"><strong>Every weekday morning — AETHER wakes up</strong>
+        <div class="sc-code">⟳ Background task running: "Check RAM prices"
+[[web_search: "DDR5 32GB RAM price today"]]
+→ Found 8 results: Kingston Fury $89, G.Skill $92, Corsair $94...</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">3</div><div class="sc-text"><strong>Report written to workspace + notification sent</strong>
+        <div class="sc-result">✓ LOGS.md updated · Push notification: "Morning report ready — RAM down 3% this week"</div>
+      </div></div>
+    </div>
+
+    <div class="sc-body" id="sc-agent">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:12px">User prompt: <em style="color:#99aabb">"Research open GitHub issues in our repo, prioritise them by impact, and build a sprint board in Notion"</em></div>
+      <div class="sc-step"><div class="sc-num">1</div><div class="sc-text"><strong>PLAN</strong> — Agent analyses the goal and produces a structured plan.
+        <div class="sc-code">&lt;agent:plan&gt;
+1. gitlab_issues(project=AETHER.AI, state=open) — fetch all open issues
+2. Analyse and prioritise by user impact + effort
+3. browser_agent("Create Notion sprint with 3 milestones and the issues grouped by priority")
+4. Report summary to conversation
+&lt;/agent:plan&gt;</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">2</div><div class="sc-text"><strong>ACT (Step 1)</strong> — Tool call dispatched automatically.
+        <div class="sc-code">[[gitlab_issues: "AETHER.AI"]]</div>
+        <div class="sc-result">✓ Found 14 open issues. Critical: #42 (sidebar close), #38 (Gemini 401), #31 (context bar). Major: 7 issues. Minor: 4 issues.</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">3</div><div class="sc-text"><strong>EVALUATE</strong> — Agent reassesses. Notes #42 and #38 are already fixed in v5.14. Updates plan.
+        <div class="sc-code">Issues #42, #38 resolved in v5.14. Removing from sprint. Remaining: 12 open.</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">4</div><div class="sc-text"><strong>ACT (Step 2)</strong> — Browser agent takes over.
+        <div class="sc-code">[[browser_agent: "Open Notion, create new page Sprint v5.15, add three sections: Critical (3 items), Major (7 items), Minor (2 items), populate from issue list"]]</div>
+        <div class="sc-result">✓ Notion sprint created. URL: notion.so/AETHER-Sprint-v5.15. 12 issues added across 3 priority groups.</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">5</div><div class="sc-text"><strong>COMPLETE</strong>
+        <div class="sc-result">&lt;agent:done&gt;Sprint v5.15 created in Notion with 12 issues. Critical items: #31 context bar fix, #39 Qwen 3.5-4B docs update, #44 Agent Mode documentation. View at notion.so/AETHER-Sprint-v5.15&lt;/agent:done&gt;</div>
+      </div></div>
+    </div>
+
+    <div class="sc-body" id="sc-research">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:12px">User prompt: <em style="color:#99aabb">"What are the best open-source LLMs for on-device mobile inference as of 2026?"</em></div>
+      <div class="sc-step"><div class="sc-num">1</div><div class="sc-text"><strong>Query decomposition</strong> — AETHER breaks the question into sub-queries.
+        <div class="sc-code">Sub-queries: [mobile inference benchmarks 2026] [quantization techniques GGUF AWQ] [Qwen3 vs Llama4 mobile] [edge AI deployment constraints]</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">2</div><div class="sc-text"><strong>Web search + scrape</strong>
+        <div class="sc-code">[[web_search: "best on-device LLM mobile 2026 benchmark"]]
+[[scrape: "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard"]]</div>
+        <div class="sc-result">✓ 8 sources found. Scraped leaderboard data, 3 blog posts, 2 research papers.</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">3</div><div class="sc-text"><strong>Synthesis</strong> — All context merged, structured answer generated with sources cited.
+        <div class="sc-result">✓ 847-token answer produced. Top models: Qwen3.5-0.8B (262K ctx), Gemma3-1B, Phi-4-mini. Qwen3.5 recommended for 262K context on 1GB RAM via GGUF Q2_K.</div>
+      </div></div>
+    </div>
+
+    <div class="sc-body" id="sc-coding">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:12px">User prompt: <em style="color:#99aabb">"Write a FastAPI endpoint for JWT auth and test it"</em></div>
+      <div class="sc-step"><div class="sc-num">1</div><div class="sc-text"><strong>AETHER outputs a named code block</strong>
+        <div class="sc-code">```python:src/auth.py
+from fastapi import APIRouter, HTTPException
+from jose import jwt
+from datetime import datetime, timedelta
+
+router = APIRouter()
+SECRET = "your-secret-key"
+
+@router.post("/token")
+def login(username: str, password: str):
+    if username == "admin" and password == "pass":
+        token = jwt.encode({"sub": username, "exp": datetime.utcnow() + timedelta(hours=1)}, SECRET)
+        return {"access_token": token}
+    raise HTTPException(401, "Invalid credentials")
+```</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">2</div><div class="sc-text"><strong>User clicks "Run" → Piston API executes</strong>
+        <div class="sc-result">✓ File saved as src/auth.py · Run result: FastAPI router registered · Token endpoint: POST /token</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">3</div><div class="sc-text"><strong>User clicks "Deploy" → blob URL opens in new tab</strong>
+        <div class="sc-result">✓ Preview open at blob:// · Valid for 60s · For persistent: npx serve .</div>
+      </div></div>
+    </div>
+
+    <div class="sc-body" id="sc-browser">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:12px">User prompt: <em style="color:#99aabb">"Check our latest 5 Slack messages in #dev and summarise them"</em></div>
+      <div class="sc-step"><div class="sc-num">1</div><div class="sc-text"><strong>Direct Slack tool (no browser needed)</strong>
+        <div class="sc-code">[[slack_read: "#dev"]]</div>
+        <div class="sc-result">✓ Last 5 messages: @alice: "PR #88 merged" · @bob: "CI failing on main" · @carol: "v5.14 deployed to staging" · @alice: "Need review on auth PR" · @dave: "Qwen3.5-4B added"</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">2</div><div class="sc-text"><strong>Browser agent for complex UI tasks</strong>
+        <div class="sc-code">[[browser_agent: "Go to our Vercel dashboard and check deployment status for AETHER.AI"]]</div>
+        <div class="sc-result">✓ Browser opened vercel.com · Found AETHER.AI project · Latest: v5.14 deployed 2h ago · Status: Ready ✓ · Build time: 48s</div>
+      </div></div>
+    </div>
+
+    <div class="sc-body" id="sc-workspace">
+      <div style="font-family:var(--mono);font-size:.6rem;color:var(--dim);margin-bottom:12px">Workspace mounted: <code>~/projects/AETHER</code> (FS mode)</div>
+      <div class="sc-step"><div class="sc-num">1</div><div class="sc-text"><strong>Lazy context loading</strong> — only manifest shown, not full content.
+        <div class="sc-code">WORKSPACE.md (2.1KB) · CORE_LOGIC.md (4.8KB) · USER.md (0.9KB) · ARCHIVES.md (18KB)</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">2</div><div class="sc-text"><strong>On-demand file read via tool</strong>
+        <div class="sc-code">[[read_file: "CORE_LOGIC.md"]]</div>
+        <div class="sc-result">✓ CORE_LOGIC.md loaded (4.8KB) — project conventions, architecture notes, code standards injected into next prompt.</div>
+      </div></div>
+      <div class="sc-step"><div class="sc-num">3</div><div class="sc-text"><strong>Power features: diff + search</strong>
+        <div class="sc-code">Search: "authentication" → 3 matches across 2 files (CORE_LOGIC.md L44, WORKSPACE.md L12, USER.md L8)
+Diff: WORKSPACE.md vs ARCHIVES.md → 47 changed lines, 12 added, 3 removed</div>
+      </div></div>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<!-- ══ DOCS ══ -->
+<div class="pg" id="pg-docs">
+<div class="docs-layout">
+<aside class="dsb">
+  <div class="ds-sec">Get Started</div>
+  <a class="ds-a on" href="#d-overview" onclick="dN(this)">Overview</a>
+  <a class="ds-a" href="#d-install" onclick="dN(this)">Installation</a>
+  <a class="ds-a" href="#d-quick" onclick="dN(this)">Quick Start</a>
+  <div class="ds-sec">Configuration</div>
+  <a class="ds-a" href="#d-providers" onclick="dN(this)">Providers</a>
+  <a class="ds-a pr" href="#d-qwen35" onclick="dN(this)">Qwen 3.5 ★</a>
+  <a class="ds-a pr" href="#d-qwen3" onclick="dN(this)">Qwen 3 ★</a>
+  <a class="ds-a" href="#d-anthropic" onclick="dN(this)">Anthropic</a>
+  <a class="ds-a" href="#d-gemini" onclick="dN(this)">Gemini</a>
+  <a class="ds-a" href="#d-encryption" onclick="dN(this)">Encryption</a>
+  <a class="ds-a" href="#d-context" onclick="dN(this)">Context</a>
+  <div class="ds-sec">Features</div>
+  <a class="ds-a" href="#d-agent" onclick="dN(this)">Agent Mode ★</a>
+  <a class="ds-a" href="#d-research" onclick="dN(this)">Deep Research</a>
+  <a class="ds-a" href="#d-tools" onclick="dN(this)">Tool Engine</a>
+  <a class="ds-a" href="#d-coding" onclick="dN(this)">Coding Mode</a>
+  <a class="ds-a" href="#d-browser" onclick="dN(this)">Browser Agent</a>
+  <a class="ds-a" href="#d-bg" onclick="dN(this)">Background Mode</a>
+  <a class="ds-a" href="#d-thinking" onclick="dN(this)">Thinking</a>
+  <a class="ds-a" href="#d-workspace" onclick="dN(this)">Workspace</a>
+  <a class="ds-a" href="#d-stt" onclick="dN(this)">STT (incl. Whisper.js)</a>
+  <a class="ds-a" href="#d-tts" onclick="dN(this)">TTS</a>
+  <div class="ds-sec">Integrations</div>
+  <a class="ds-a" href="#d-firecrawl" onclick="dN(this)">Firecrawl</a>
+  <a class="ds-a" href="#d-slack" onclick="dN(this)">Slack &amp; Notion</a>
+  <a class="ds-a" href="#d-jira" onclick="dN(this)">Jira &amp; GitLab</a>
+  <a class="ds-a" href="#d-hue" onclick="dN(this)">Philips Hue</a>
+  <div class="ds-sec">Reference</div>
+  <a class="ds-a" href="#d-toolreg" onclick="dN(this)">Tool Registry</a>
+  <a class="ds-a" href="#d-models" onclick="dN(this)">Model Registry</a>
+  <a class="ds-a" href="#d-changelog" onclick="dN(this)">Changelog</a>
+</aside>
+<main class="dmain" id="dmain">
+<h1>AETHER Documentation</h1>
+<p><strong>v5.14</strong> · GPL-3.0 · <a href="https://github.com/architect-brad/AETHER.AI" target="_blank">github.com/architect-brad/AETHER.AI</a></p>
+<div class="co co-g"><strong>★ Preferred:</strong> Qwen 3.5 (0.8B→35B-A3B, 262K) for local. DeepSeek Reasoner for cloud reasoning. Agent Mode v1 now ships built-in.</div>
+
+<h2 id="d-overview" class="nb">Overview</h2>
+<p>AETHER runs in three browser files. No server required (except optional Browser Automation). GPL-3.0. Agent Mode v1 ships built-in. 22 providers, including Veo, Moondream2, FLUX.2, and Nano Banana.</p>
+
+<h2 id="d-install">Installation</h2>
+<div class="pblock"><div class="pblock-hdr"><span>bash — git clone</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>git clone https://github.com/architect-brad/AETHER.AI.git
+cd AETHER.AI
+# Open index.html directly in browser — done</code></pre></div>
+<div class="pblock"><div class="pblock-hdr"><span>bash — serve locally (enables PWA + HTTPS features)</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>npx serve .               # Node.js (recommended)
+python3 -m http.server 3000  # Python fallback</code></pre></div>
+
+<h2 id="d-quick">Quick Start</h2>
+<div class="pblock"><div class="pblock-hdr"><span>bash — Qwen 3.5 with llama.cpp</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code># Download GGUF (~5GB for 9B Q4)
+wget https://huggingface.co/bartowski/Qwen_Qwen3.5-9B-Instruct-GGUF/resolve/main/Qwen3.5-9B-Instruct-Q4_K_M.gguf
+
+# Start server
+./llama-server -m Qwen3.5-9B-Instruct-Q4_K_M.gguf \
+  --port 8080 --ctx-size 65536 --mlock
+
+# Open AETHER — auto-connects to localhost:8080</code></pre></div>
+<div class="pblock"><div class="pblock-hdr"><span>bash — Ollama (simplest)</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>ollama pull qwen3.5:9b-instruct
+ollama serve
+# Set AETHER endpoint: http://localhost:11434/v1/chat/completions</code></pre></div>
+<div class="pblock"><div class="pblock-hdr"><span>bash — vLLM (full 262K context, GPU)</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>pip install vllm
+python -m vllm.entrypoints.openai.api_server \
+  --model Qwen/Qwen3.5-9B-Instruct \
+  --max-model-len 262144 \
+  --enable-prefix-caching --port 8080</code></pre></div>
+
+<h2 id="d-providers">API Providers</h2>
+<div class="co co-i"><strong>Auto-detection:</strong> Anthropic → <code>x-api-key</code> header. Gemini → <code>?key=</code> param (not Bearer — causes HTTP 401). OpenRouter → auto Referer header.</div>
+<table class="dtable"><tr><th>Provider</th><th>Auth</th><th>Notes</th></tr>
+<tr class="pr-row"><td>Qwen (DashScope)</td><td>Bearer</td><td>★ Preferred</td></tr>
+<tr class="pr-row"><td>DeepSeek</td><td>Bearer</td><td>★ Best reasoning</td></tr>
+<tr><td>Local / llama.cpp / Ollama</td><td>None</td><td>Default endpoint localhost:8080</td></tr>
+<tr><td>OpenAI</td><td>Bearer</td><td>GPT-5.4, o4-mini</td></tr>
+<tr><td>Anthropic</td><td>x-api-key (auto)</td><td>Claude 4.6 — SSE + tools auto-handled</td></tr>
+<tr><td>Google Gemini</td><td>?key= (auto)</td><td>Never sends Bearer header</td></tr>
+<tr><td>Groq / xAI / Mistral</td><td>Bearer</td><td>Standard endpoints</td></tr>
+<tr><td>OpenRouter</td><td>Bearer + Referer (auto)</td><td>Any model via routing</td></tr>
+<tr><td>Veo</td><td>?key= (auto)</td><td>Google video gen model</td></tr>
+<tr><td>Moondream2</td><td>Bearer</td><td>2B vision model, efficient on-device</td></tr>
+<tr><td>FLUX.2</td><td>Bearer</td><td>Image generation (bfl.ml API)</td></tr>
+<tr><td>Nano Banana</td><td>None</td><td>Local edge inference endpoint</td></tr>
+<tr><td>Custom</td><td>Configurable</td><td>Any OpenAI-compat endpoint</td></tr></table>
+
+<h2 id="d-qwen35">Qwen 3.5 ★</h2>
+<p>Auto-detected. AETHER injects <code>enable_thinking: true</code> and <code>num_speculative_tokens: 4</code> automatically. GDN hybrid architecture gives O(n) linear-attention — enables 262K context on consumer hardware.</p>
+<div class="pblock"><div class="pblock-hdr"><span>Auto-injected API body</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>{ "model": "qwen3.5-9b-instruct",
+  "enable_thinking": true,
+  "num_speculative_tokens": 4,
+  "stream": true }</code></pre></div>
+
+<h2 id="d-qwen3">Qwen 3 ★</h2>
+<table class="dtable"><tr><th>Model</th><th>Ctx</th><th>GGUF Q4</th></tr>
+<tr class="pr-row"><td>qwen3-0.6b-instruct</td><td>32K</td><td>0.4GB</td></tr>
+<tr class="pr-row"><td>qwen3-4b-instruct</td><td>128K</td><td>2.4GB</td></tr>
+<tr class="pr-row"><td>qwen3-8b-instruct</td><td>128K</td><td>5.0GB</td></tr>
+<tr class="pr-row"><td>qwen3-32b-instruct</td><td>128K</td><td>20GB</td></tr>
+<tr class="pr-row"><td>qwen3-235b-a22b (MoE)</td><td>128K</td><td>Cloud only</td></tr></table>
+
+<h2 id="d-anthropic">Anthropic Auth</h2>
+<p>Automatically: <code>x-api-key</code> header, <code>anthropic-version: 2023-06-01</code>, Anthropic SSE parsing, <code>input_schema</code> tool format, alternating roles enforcement. No config needed.</p>
+
+<h2 id="d-gemini">Gemini Auth</h2>
+<div class="co co-r"><strong>HTTP 401?</strong> Gemini needs <code>?key=YOUR_KEY</code> as URL param — not Bearer. AETHER auto-handles this for Google provider.</div>
+
+<h2 id="d-encryption">Encryption</h2>
+<div class="pblock"><div class="pblock-hdr"><span>Key derivation</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>Password → PBKDF2-SHA256 (100,000 iter, random salt)
+         → 256-bit AES key
+         → AES-256-GCM encrypt(apiKey, randomIV)
+         → Store: b64(ciphertext) + b64(IV) + b64(salt)</code></pre></div>
+<div class="co co-w"><strong>No password recovery.</strong> Clear localStorage to reset.</div>
+
+<h2 id="d-context">Context Windows</h2>
+<table class="dtable"><tr><th>Model</th><th>Context</th></tr>
+<tr class="pr-row"><td>qwen3.5-* (all)</td><td>262,144</td></tr>
+<tr class="pr-row"><td>qwen3-4b to 32b</td><td>131,072</td></tr>
+<tr><td>claude-4-6-* / gemini-3-1 / llama-4</td><td>1,000,000</td></tr>
+<tr><td>gpt-5.4</td><td>270,000</td></tr>
+<tr><td>kimi-k2.5 / grok-4</td><td>256,000</td></tr>
+<tr><td>deepseek-v3-2</td><td>128,000</td></tr>
+<tr><td>moondream-2b</td><td>8,192</td></tr>
+<tr><td>nano-banana</td><td>32,768</td></tr>
+<tr><td>Unknown / custom</td><td>8,000</td></tr></table>
+
+<h2 id="d-agent">Agent Mode v1 ★ NEW</h2>
+<p>Click <strong>AGENT</strong> in the toolbar. Enter a goal, set step limit (1–30) and approval mode (auto or per-step). AETHER runs autonomously using tools until the goal is complete or limits are reached.</p>
+<h4>How it works</h4>
+<ul>
+  <li><strong>Plan:</strong> AI produces a structured <code>&lt;agent:plan&gt;</code> of numbered steps</li>
+  <li><strong>Act:</strong> Executes one tool call per step using <code>[[tool: arg]]</code> syntax</li>
+  <li><strong>Evaluate:</strong> After each tool result, re-assesses progress and updates plan</li>
+  <li><strong>Retry:</strong> If a step fails, tries an alternative approach autonomously</li>
+  <li><strong>Complete:</strong> Outputs <code>&lt;agent:done&gt;summary&lt;/agent:done&gt;</code> when goal is achieved</li>
+</ul>
+<h4>Configuration options</h4>
+<table class="dtable"><tr><th>Option</th><th>Values</th><th>Default</th></tr>
+<tr><td>Max Steps</td><td>1–30</td><td>10</td></tr>
+<tr><td>Tool Budget</td><td>1–50</td><td>20</td></tr>
+<tr><td>Approval Mode</td><td>Auto (run all) / Per Step</td><td>Auto</td></tr></table>
+<div class="co co-w"><strong>Cost note:</strong> Each step is a separate API call. A 10-step agent task = 10+ API calls. Use local models (Qwen3.5) for cost-free agent runs.</div>
+
+<h2 id="d-research">Deep Research</h2>
+<p>Click <strong>⚛ DEEP</strong>. Chains: decomposition → web_search → Firecrawl scrape → DB queries → synthesis. Prefers deepseek-reasoner, qwen3.5-35b-a3b. Suggests model switch if needed.</p>
+
+<h2 id="d-tools">Tool Engine</h2>
+<div class="pblock"><div class="pblock-hdr"><span>Three syntaxes — all parsed automatically</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>// JSON block
+```tool_call
+{"name":"web_search","arguments":{"query":"Qwen 3.5 2026"}}
+```
+// XML tag
+&lt;tool_call name="get_weather"&gt;{"location":"London"}&lt;/tool_call&gt;
+// Shorthand (easiest for model to use)
+[[browser_agent: "Open GitHub and create issue titled v5.15"]]</code></pre></div>
+
+<h2 id="d-coding">Coding Mode</h2>
+<p>Click <strong>⌨ CODE</strong>. Use <code>```python:src/utils.py</code> for named blocks.</p>
+<table class="dtable"><tr><th>Button</th><th>Action</th></tr>
+<tr><td>Run</td><td>Piston API — 50+ languages</td></tr>
+<tr><td>Preview</td><td>Sandboxed iframe, JS runs live</td></tr>
+<tr><td>Deploy</td><td>Blob URL → new tab, 60s (HTML/JS/CSS)</td></tr>
+<tr><td>Console</td><td>JS eval + iframe error bridge</td></tr>
+<tr><td>Fix</td><td>Structured AI fix prompt in chat</td></tr>
+<tr><td>Save</td><td>File System API → workspace file</td></tr></table>
+
+<h2 id="d-browser">Browser Agent</h2>
+<div class="pblock"><div class="pblock-hdr"><span>bash — complete setup</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>pip install browser-use playwright fastapi uvicorn
+playwright install chromium
+
+# Minimal server file (aether_browser_agent.py)
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+
+app = FastAPI()
+app.add_middleware(CORSMiddleware, allow_origins=["*"],
+    allow_methods=["*"], allow_headers=["*"])
+
+class Req(BaseModel):
+    task: str
+    engine: str = "browser-use"
+
+@app.post("/run")
+async def run(req: Req):
+    # Add your browser-use or playwright logic here
+    return {"result": f"Executed: {req.task}"}
+
+# Start the server
+uvicorn aether_browser_agent:app --port 7860 --reload
+
+# In AETHER: HOOKS → Browser Automation → Enable → Save</code></pre></div>
+
+<h2 id="d-bg">Background Mode</h2>
+<p>Click <strong>BG</strong> in toolbar. Task types: Deep Research, Summarise, Timed Reminder. Browser push notifications — no server. Results saved to conversation.</p>
+
+<h2 id="d-thinking">Adaptive Thinking</h2>
+<p>Live <code>&lt;think&gt;</code> streaming with token counter. Toggle in CFG → Show Thoughts. Qwen3.5 / DeepSeek: API param. Others: raw tag parsing.</p>
+
+<h2 id="d-workspace">Workspace</h2>
+<p>FS mode (real folder) or Virtual (IndexedDB). Only manifest in context — files read via <code>[[read_file: filename]]</code> on demand.</p>
+<p><strong>Power features:</strong> File Diff (color-coded), Multi-file Search (regex + highlights), Templates (Python / Web App / Research / Writing). Place <code>SYSTEM_PROMPT.mmd</code> with <code>## IDENTITY / ## BEHAVIOR / ## CONSTRAINTS / ## CONTEXT</code> to override system prompt.</p>
+
+<h2 id="d-stt">Speech-to-Text (incl. Whisper.js)</h2>
+<div class="pblock"><div class="pblock-hdr"><span>Whisper.js — offline, no API key</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code># No setup needed — AETHER auto-downloads the model on first use
+# HOOKS → STT Engine → Whisper.js (Offline)
+# Requires Chrome/Edge with WebGPU (or falls back to WASM)
+# First use: ~300MB download cached by browser
+# All subsequent uses: 100% offline</code></pre></div>
+<div class="pblock"><div class="pblock-hdr"><span>bash — Whisper.cpp alternative</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>git clone https://github.com/ggerganov/whisper.cpp && make
+bash models/download-ggml-model.sh base.en
+./server -m models/ggml-base.en.bin --port 9000</code></pre></div>
+<table class="dtable"><tr><th>Engine</th><th>Offline</th><th>Cost</th><th>Setup</th></tr>
+<tr class="pr-row"><td>Whisper.js</td><td>✓ Yes</td><td>Free</td><td>Zero (auto-download)</td></tr>
+<tr><td>Browser API</td><td>No</td><td>Free</td><td>Zero</td></tr>
+<tr><td>Whisper.cpp</td><td>✓ Yes</td><td>Free</td><td>Build + run server</td></tr>
+<tr><td>OpenAI Whisper</td><td>No</td><td>$0.006/min</td><td>API key</td></tr>
+<tr><td>Vosk</td><td>✓ Yes</td><td>Free</td><td>pip install</td></tr></table>
+
+<h2 id="d-tts">TTS</h2>
+<div class="pblock"><div class="pblock-hdr"><span>bash — Piper local server</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>pip install piper-tts
+piper-server --port 5000 --model en_US-lessac-medium</code></pre></div>
+
+<h2 id="d-firecrawl">Firecrawl</h2>
+<p>Key at <a href="https://firecrawl.dev" target="_blank">firecrawl.dev</a> (500 credits/month free). HOOKS → Firecrawl Key. Adds <code>scrape</code> + <code>crawl</code> tools.</p>
+
+<h2 id="d-slack">Slack &amp; Notion</h2>
+<div class="pblock"><div class="pblock-hdr"><span>Slack OAuth scopes</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>chat:write  channels:history  channels:read</code></pre></div>
+<div class="pblock"><div class="pblock-hdr"><span>Notion — get Database ID</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code># URL format: notion.so/{DATABASE_ID}?v=...
+# UUID before the ? is your Database ID</code></pre></div>
+
+<h2 id="d-jira">Jira &amp; GitLab</h2>
+<div class="pblock"><div class="pblock-hdr"><span>Jira API token</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code># id.atlassian.com/manage-profile/security/api-tokens
+# AETHER HOOKS:
+#   Jira URL = https://yourco.atlassian.net
+#   Email    = <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="433a2c363103262e222a2f6d202c2e">[email&#160;protected]</a>
+#   Token    = ATATT3xFf...</code></pre></div>
+<div class="pblock"><div class="pblock-hdr"><span>GitLab PAT</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code># gitlab.com/-/profile/personal_access_tokens
+# Scopes: api, read_repository</code></pre></div>
+
+<h2 id="d-hue">Philips Hue</h2>
+<div class="pblock"><div class="pblock-hdr"><span>bash — discover bridge + get key</span><button class="pblock-copy" onclick="cpy(this)">Copy</button></div><pre><code>curl https://discovery.meethue.com/
+# Press physical button on bridge, then:
+curl -X POST http://BRIDGE_IP/api -d '{"devicetype":"AETHER#browser"}'
+# Copy "username" value → AETHER HOOKS → Hue Key</code></pre></div>
+
+<h2 id="d-toolreg">Tool Registry (17)</h2>
+<table class="dtable"><tr><th>Tool</th><th>Args</th><th>Requires</th></tr>
+<tr><td><code>web_search</code></td><td>query</td><td>Tavily/Brave/Serper</td></tr>
+<tr><td><code>scrape</code></td><td>url</td><td>Firecrawl</td></tr>
+<tr><td><code>crawl</code></td><td>url, maxPages</td><td>Firecrawl</td></tr>
+<tr><td><code>get_weather</code></td><td>location</td><td>OWM key</td></tr>
+<tr><td><code>slack_post/read</code></td><td>channel,msg/limit</td><td>Slack token</td></tr>
+<tr><td><code>notion_query/add</code></td><td>dbId/title,content</td><td>Notion token</td></tr>
+<tr><td><code>hue_lights/set</code></td><td>—/id,on,bri</td><td>Hue bridge</td></tr>
+<tr><td><code>jira_search/create</code></td><td>jql/proj,sum,desc</td><td>Jira token</td></tr>
+<tr><td><code>gitlab_issues/mr</code></td><td>proj,state/…</td><td>GitLab token</td></tr>
+<tr><td><code>read_file</code></td><td>filename</td><td>Workspace</td></tr>
+<tr><td><code>calculate</code></td><td>expression</td><td>—</td></tr>
+<tr><td><code>browser_agent</code></td><td>task</td><td>Local backend</td></tr></table>
+
+<h2 id="d-models">Model Registry</h2>
+<table class="dtable"><tr><th>Pattern</th><th>Context</th><th>Notes</th></tr>
+<tr class="pr-row"><td>qwen3.5-*</td><td>262,144</td><td>★ + thinking injection</td></tr>
+<tr class="pr-row"><td>qwen3-4b to 32b</td><td>131,072</td><td>★ preferred</td></tr>
+<tr class="pr-row"><td>deepseek-*</td><td>128,000</td><td>★ research</td></tr>
+<tr><td>claude-4-6-*</td><td>1,000,000</td><td>Anthropic auto-auth</td></tr>
+<tr><td>gpt-5.4</td><td>270,000</td><td>—</td></tr>
+<tr><td>moondream-2b</td><td>8,192</td><td>Vision model</td></tr>
+<tr><td>nano-banana-*</td><td>32,768</td><td>Edge/local</td></tr>
+<tr><td>Unknown</td><td>8,000</td><td>Default</td></tr></table>
+
+<h2 id="d-changelog">Changelog v5.14</h2>
+<ul>
+<li><strong>NEW</strong> — Agent Mode v1: plan/act/evaluate/retry, step limits, approval gates</li>
+<li><strong>NEW</strong> — Whisper.js offline STT via Transformers.js + WebGPU</li>
+<li><strong>NEW</strong> — Veo, Moondream2, FLUX.2, Nano Banana added as providers</li>
+<li><strong>NEW</strong> — Browser Use + Playwright backend (browser_agent tool #17)</li>
+<li><strong>NEW</strong> — Coding Mode: Deploy button, local JS console, iframe error bridge</li>
+<li><strong>NEW</strong> — Background Mode: async tasks + browser push notifications</li>
+<li><strong>NEW</strong> — Qwen 3.5-4B, full Qwen 3 base (0.6B→32B, 235B MoE)</li>
+<li><strong>FIX</strong> — JS syntax errors (ASCII_RAMP_FINE broken literal, template backtick escaping, duplicate declaration)</li>
+<li><strong>FIX</strong> — site.html hero blank space: removed min-height:100vh</li>
+<li><strong>FIX</strong> — Sidebar X close: belt-and-suspenders for mobile WebViews</li>
+<li><strong>FIX</strong> — Gemini HTTP 401: auto ?key= param</li>
+<li><strong>FIX</strong> — Race conditions: renderConversationList debounce, saveConversations debounce, sendMessage lock</li>
+</ul>
+</main>
+</div>
+</div>
+
+<!-- ══ FAQ ══ -->
+<div class="pg" id="pg-faq">
+<div class="fwrap">
+  <div class="lbl">100 questions</div>
+  <h2 class="h2" style="font-size:clamp(1.4rem,4.5vw,2.1rem)">Everything answered.</h2>
+  <p class="sub" style="margin-bottom:16px">Can't find it? <a href="https://github.com/architect-brad/AETHER.AI/issues" target="_blank">Open a GitHub issue</a>.</p>
+  <input class="fsearch" id="fsearch" placeholder="Search 100 questions…" oninput="filtFaq(this.value)" autocomplete="off">
+  <div class="fcats" id="fcats"></div>
+  <div class="flist" id="flist"></div>
+  <div class="fempty" id="fempty" style="display:none">No results found.</div>
+</div>
+</div>
+
+<!-- ══ ROADMAP ══ -->
+<div class="pg" id="pg-roadmap">
+<section class="sec"><div class="wrap-sm">
+  <div class="lbl">What's next</div>
+  <h2 class="h2">AETHER Roadmap.</h2>
+  <p class="sub" style="margin-bottom:6px">Active development and planned features. <a href="https://github.com/architect-brad/AETHER.AI" target="_blank">Contributions welcome</a>.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin:16px 0 24px">
+    <span style="display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.59rem"><span style="width:24px;height:24px;border-radius:50%;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.25);display:grid;place-items:center;color:var(--green);font-size:.62rem">✓</span>Shipped</span>
+    <span style="display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.59rem"><span style="width:24px;height:24px;border-radius:50%;background:rgba(0,243,255,.07);border:1px solid rgba(0,243,255,.25);display:grid;place-items:center;color:var(--cyan);font-size:.47rem;animation:rmspn 2s linear infinite">NOW</span>In Progress</span>
+    <span style="display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.59rem"><span style="width:24px;height:24px;border-radius:50%;background:rgba(155,89,182,.05);border:1px solid rgba(155,89,182,.2);display:grid;place-items:center;color:#c07de8;font-size:.47rem">Q3</span>Planned</span>
+  </div>
+  <div class="rm-wrap">
+    <div class="rm-item"><div class="rm-dot done">✓</div><div class="rm-body"><div class="rm-title">Agent Mode v1</div><div class="rm-desc">Plan → Act → Evaluate → Retry. Configurable step limits, approval gates, per-step logging, stop button.</div><div class="rm-chips"><span class="tag tg">SHIPPED v5.14</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot done">✓</div><div class="rm-body"><div class="rm-title">Whisper.js Offline STT</div><div class="rm-desc">Fully local voice input via Transformers.js + WebGPU. No API key. Auto-downloads once, offline forever.</div><div class="rm-chips"><span class="tag tg">SHIPPED v5.14</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot done">✓</div><div class="rm-body"><div class="rm-title">Browser Use + Playwright</div><div class="rm-desc">Optional local Python backend for real browser control. browser_agent tool registered.</div><div class="rm-chips"><span class="tag tg">SHIPPED v5.14</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot done">✓</div><div class="rm-body"><div class="rm-title">Coding Mode with Console + Deploy</div><div class="rm-desc">Named blocks, preview iframe, JS console with iframe bridge, Piston exec, blob deploy, workspace save.</div><div class="rm-chips"><span class="tag tg">SHIPPED v5.14</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot done">✓</div><div class="rm-body"><div class="rm-title">Background Mode + Push Notifications</div><div class="rm-desc">Async task queue (Research, Summarise, Remind) with browser Notifications API. No server.</div><div class="rm-chips"><span class="tag tg">SHIPPED v5.14</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot done">✓</div><div class="rm-body"><div class="rm-title">Veo + Moondream2 + FLUX.2 + Nano Banana</div><div class="rm-desc">Four new providers added: Google Veo (video gen), Moondream2 (vision 2B), FLUX.2 (image gen), Nano Banana (edge AI).</div><div class="rm-chips"><span class="tag tg">SHIPPED v5.14</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot done">✓</div><div class="rm-body"><div class="rm-title">JS Syntax Error Fixes</div><div class="rm-desc">ASCII_RAMP_FINE broken literal, template backtick escaping, duplicate const declaration. All fixed.</div><div class="rm-chips"><span class="tag tg">SHIPPED v5.14</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot now">NOW</div><div class="rm-body"><div class="rm-title">Agent Mode v2 — Persistent Memory</div><div class="rm-desc">Agent writes to workspace between steps. Resume interrupted tasks. Cross-session agent memory via WORKSPACE.md.</div><div class="rm-chips"><span class="tag tc">IN PROGRESS</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot now">NOW</div><div class="rm-body"><div class="rm-title">FLUX.2 Image Generation UI</div><div class="rm-desc">Inline image display in chat. Generate from text prompts. Edit via inpainting. Save to workspace.</div><div class="rm-chips"><span class="tag tc">IN PROGRESS</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot soon">Q3</div><div class="rm-body"><div class="rm-title">Advanced RAG Pipeline</div><div class="rm-desc">hnswlib-WASM vector search. Hybrid BM25+vector retrieval. Semantic chunking. Retrieval quality scoring.</div><div class="rm-chips"><span class="tag tp">2026 Q3</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot soon">Q3</div><div class="rm-body"><div class="rm-title">Collaborative Sessions (WebRTC)</div><div class="rm-desc">Real-time multi-user AI chat with shared context. Peer-to-peer — no server.</div><div class="rm-chips"><span class="tag tp">2026 Q3</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot soon">Q4</div><div class="rm-body"><div class="rm-title">AETHER Extensions API</div><div class="rm-desc">Plugin system. Community tools, providers, UI panels loadable via URL. GPL-3.0 marketplace on GitHub.</div><div class="rm-chips"><span class="tag tp">2026 Q4</span></div></div></div>
+    <div class="rm-item"><div class="rm-dot soon">Q4</div><div class="rm-body"><div class="rm-title">Mobile App (Capacitor)</div><div class="rm-desc">Native iOS + Android wrapper. Native file system, background execution, voice assistant integration.</div><div class="rm-chips"><span class="tag tp">2026 Q4</span></div></div></div>
+  </div>
+  <div style="margin-top:36px;padding:20px;background:var(--s1);border:1px solid rgba(0,243,255,.1);border-radius:7px;text-align:center">
+    <p style="font-size:.78rem;color:#c8dcf0;font-weight:700;margin-bottom:5px">Build AETHER with us.</p>
+    <p style="font-size:.72rem;color:var(--dim);margin-bottom:14px;max-width:400px;margin-left:auto;margin-right:auto">GPL-3.0 — every roadmap item is open for contributions.</p>
+    <div class="btn-row" style="justify-content:center">
+      <a href="https://github.com/architect-brad/AETHER.AI/issues" target="_blank" class="btn-p" style="font-size:.61rem">🐛 Issues</a>
+      <a href="https://github.com/architect-brad/AETHER.AI/discussions" target="_blank" class="btn-s" style="font-size:.61rem">💬 Discuss</a>
+      <a href="https://github.com/architect-brad/AETHER.AI/pulls" target="_blank" class="btn-s" style="font-size:.61rem">⑂ PRs</a>
+    </div>
+  </div>
+</div></section>
+</div>
+
+<footer>
+  <div class="fl">⬡ <span style="color:#334455">AETHER v5.14</span> · GNU GPL-3.0 · The Architect</div>
+  <div class="flinks">
+    <a onclick="S('home')">Home</a><a onclick="S('features')">Features</a>
+    <a onclick="S('showcase')">Showcase</a><a onclick="S('docs')">Docs</a>
+    <a onclick="S('faq')">FAQ</a><a onclick="S('roadmap')">Roadmap</a>
+    <a href="index.html">App</a>
+    <a href="https://github.com/architect-brad/AETHER.AI" target="_blank">GitHub</a>
+  </div>
+</footer>
+<script>
+// PAGE SWITCHING
+function S(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.nt').forEach(t=>t.classList.remove('on'));document.getElementById('pg-'+id)?.classList.add('on');document.getElementById('t-'+id)?.classList.add('on');window.scrollTo({top:0,behavior:'instant'});}
+
+// DOCS SIDEBAR
+function dN(el){document.querySelectorAll('.ds-a').forEach(a=>a.classList.remove('on'));el.classList.add('on');const id=el.getAttribute('href').slice(1);setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}),30);return false;}
+const dObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.id;document.querySelectorAll('.ds-a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));}});},{rootMargin:'-5% 0px -75% 0px'});
+setTimeout(()=>document.querySelectorAll('#dmain h2[id],#dmain h3[id]').forEach(h=>dObs.observe(h)),200);
+
+// SHOWCASE TABS
+function scSwitch(btn, id){document.querySelectorAll('.sc-tab').forEach(t=>t.classList.remove('on'));document.querySelectorAll('.sc-body').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.getElementById(id)?.classList.add('on');}
+
+// COPY CODE BLOCKS
+function cpy(btn){const code=btn.closest('.pblock')?.querySelector('code')?.textContent||'';navigator.clipboard.writeText(code.trim()).then(()=>{const o=btn.textContent;btn.textContent='Copied!';btn.style.color='var(--green)';setTimeout(()=>{btn.textContent=o;btn.style.color='';},1800);});}
+
+// PROVIDERS
+const PROVS=[
+  {n:'Local',pref:false,c:'#00f3ff',url:null},
+  {n:'Qwen',pref:true,c:'#00ff88',url:'https://play-lh.googleusercontent.com/5452937495981010867_0'},
+  {n:'DeepSeek',pref:true,c:'#4fc3f7',url:'https://play-lh.googleusercontent.com/3001901117641757060_0'},
+  {n:'OpenAI',pref:false,c:'#74aa9c',url:'https://play-lh.googleusercontent.com/10923418405145776986_0'},
+  {n:'Anthropic',pref:false,c:'#d4a27f',url:'https://play-lh.googleusercontent.com/3503628872399651778_2'},
+  {n:'Google',pref:false,c:'#4285F4',url:'https://play-lh.googleusercontent.com/13126720952801756779_0'},
+  {n:'Groq',pref:false,c:'#F55036',url:'https://play-lh.googleusercontent.com/2754987994992421784'},
+  {n:'xAI',pref:false,c:'#e0e0e0',url:'https://play-lh.googleusercontent.com/12736384832836175479'},
+  {n:'Mistral',pref:false,c:'#ff7000',url:'https://play-lh.googleusercontent.com/1439718729450624947_0'},
+  {n:'Cohere',pref:false,c:'#39d353',url:'https://play-lh.googleusercontent.com/15246088922586313525'},
+  {n:'OpenRouter',pref:false,c:'#6c5ce7',url:'https://play-lh.googleusercontent.com/3681552422934935207'},
+  {n:'Together',pref:false,c:'#7c3aed',url:'https://play-lh.googleusercontent.com/8024802634539193351'},
+  {n:'Kimi',pref:false,c:'#00bcd4',url:'https://play-lh.googleusercontent.com/5497336613126144033_0'},
+  {n:'SiliconFlow',pref:false,c:'#6e56cf',url:'https://play-lh.googleusercontent.com/4959448745065080148_0'},
+  {n:'Perplexity',pref:false,c:'#1fb8cd',url:'https://play-lh.googleusercontent.com/4842950803865285206_1'},
+  {n:'Meta AI',pref:false,c:'#0082fb',url:'https://play-lh.googleusercontent.com/2395723289544984092_0'},
+  {n:'Copilot',pref:false,c:'#0078d4',url:'https://play-lh.googleusercontent.com/14790414143284876408_0'},
+  {n:'Veo',pref:false,c:'#4285F4',url:null},
+  {n:'Moondream2',pref:false,c:'#a78bfa',url:null},
+  {n:'FLUX.2',pref:false,c:'#ff6b9d',url:null},
+  {n:'Nano Banana',pref:false,c:'#fbbf24',url:null},
+  {n:'Custom',pref:false,c:'#556677',url:null},
+];
+const pg=document.getElementById('prov-grid');
+if(pg) PROVS.forEach(p=>{
+  const el=document.createElement('div');el.className='pcard'+(p.pref?' pref':'');
+  const logo=p.url
+    ?`<img src="${p.url}" alt="${p.n}" style="width:24px;height:24px;border-radius:4px;object-fit:contain" loading="lazy" onerror="this.style.display='none'">`
+    :`<svg viewBox="0 0 24 24" fill="none" stroke="${p.c}" stroke-width="1.5" width="22" height="22"><circle cx="12" cy="12" r="9" stroke-dasharray="4 3" opacity=".6"/><line x1="12" y1="8" x2="12" y2="16" stroke-linecap="round"/><line x1="8" y1="12" x2="16" y2="12" stroke-linecap="round"/></svg>`;
+  el.innerHTML=`<div class="pcard-logo">${logo}</div><div class="pcard-name">${p.n}</div>`;
+  pg.appendChild(el);
+});
+
+// CHARTS
+const ctxData=[
+  {label:'Qwen 3.5-35B (AETHER★)',val:262,color:'#00ff88'},
+  {label:'Qwen 3.5-9B (AETHER★)',val:262,color:'#00cc66'},
+  {label:'Claude 4.6 Opus',val:1000,color:'#d4a27f'},
+  {label:'Llama 4 Maverick',val:1000,color:'#6699bb'},
+  {label:'GPT-5.4',val:270,color:'#74aa9c'},
+  {label:'DeepSeek V3-2 (AETHER★)',val:128,color:'#4fc3f7'},
+  {label:'Qwen 3-32B (AETHER★)',val:128,color:'#339966'},
+  {label:'Grok 4',val:256,color:'#cccccc'},
+  {label:'Gemini 3.1 Flash',val:1000,color:'#4285F4'},
+];
+const maxCtx=Math.max(...ctxData.map(d=>d.val));
+const cc=document.getElementById('ctx-chart');
+if(cc) ctxData.forEach(d=>{
+  const pct=Math.max(4,Math.round(d.val/maxCtx*100));
+  const label=d.val>=1000?'1M+':d.val+'K';
+  cc.innerHTML+=`<div class="bar-row"><div class="bar-label">${d.label}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${d.color}20;border:1px solid ${d.color}40;color:${d.color}">${label}</div></div></div>`;
+});
+const toolData=[
+  {label:'AETHER',val:17,color:'#00f3ff'},
+  {label:'Open WebUI',val:6,color:'#4fc3f7'},
+  {label:'OpenClaw',val:8,color:'#9b59b6'},
+  {label:'ChatGPT (web)',val:5,color:'#74aa9c'},
+  {label:'Claude.ai (web)',val:4,color:'#d4a27f'},
+];
+const maxTool=17;
+const tc2=document.getElementById('tools-chart');
+if(tc2) toolData.forEach(d=>{
+  const pct=Math.round(d.val/maxTool*100);
+  tc2.innerHTML+=`<div class="bar-row"><div class="bar-label">${d.label}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${d.color}18;border:1px solid ${d.color}38;color:${d.color}">${d.val} tools</div></div><div class="bar-val">${d.val}</div></div>`;
+});
+
+// DOWNLOAD
+const GH='architect-brad',REPO='AETHER.AI';
+const FILES=[
+  {n:'index.html',u:`https://raw.githubusercontent.com/${GH}/${REPO}/main/index.html`},
+  {n:'script.js',u:`https://raw.githubusercontent.com/${GH}/${REPO}/main/script.js`},
+  {n:'style.css',u:`https://raw.githubusercontent.com/${GH}/${REPO}/main/style.css`},
+  {n:'manifest.json',u:`https://raw.githubusercontent.com/${GH}/${REPO}/main/manifest.json`},
+  {n:'sw.js',u:`https://raw.githubusercontent.com/${GH}/${REPO}/main/sw.js`},
+  {n:'logo.svg',u:`https://raw.githubusercontent.com/${GH}/${REPO}/main/logo.svg`},
+];
+async function downloadRelease(){
+  const btn=document.getElementById('dl-btn'),prog=document.getElementById('dl-progress'),
+        st=document.getElementById('dl-status'),bar=document.getElementById('dl-bar'),fl=document.getElementById('dl-files');
+  if(!window.showDirectoryPicker){alert('Use Chrome/Edge 86+ for one-click download, or grab the ZIP from GitHub.');return;}
+  btn.disabled=true;btn.textContent='Preparing…';prog.style.display='block';
+  try{
+    st.textContent='Select location for AETHER folder…';
+    const root=await window.showDirectoryPicker({mode:'readwrite'});
+    const dir=await root.getDirectoryHandle('AETHER',{create:true});
+    st.innerHTML='<span style="color:#00ff88">📁 AETHER/ created — downloading…</span>';
+    for(let i=0;i<FILES.length;i++){
+      const f=FILES[i];fl.innerHTML+=`<div id="df${i}" style="color:#334455">⟳ ${f.n}</div>`;fl.scrollTop=fl.scrollHeight;
+      try{const res=await fetch(f.u);if(!res.ok)throw new Error(`HTTP ${res.status}`);const text=await res.text();const fh=await dir.getFileHandle(f.n,{create:true});const w=await fh.createWritable();await w.write(text);await w.close();document.getElementById('df'+i).innerHTML=`<span style="color:#00ff88">✓</span> ${f.n}`;}
+      catch(e){document.getElementById('df'+i).innerHTML=`<span style="color:#e74c3c">✗</span> ${f.n} — ${e.message}`;}
+      bar.style.width=((i+1)/FILES.length*100)+'%';
+    }
+    st.innerHTML='<span style="color:#00ff88">✅ Done! Open AETHER/index.html to launch.</span>';
+    btn.textContent='✓ Downloaded!';btn.style.borderColor='#00ff88';btn.style.color='#00ff88';
+  }catch(e){
+    if(e.name!=='AbortError')st.innerHTML=`<span style="color:#e74c3c">Error: ${e.message}</span>`;
+    else prog.style.display='none';
+    btn.disabled=false;btn.textContent='DOWNLOAD AETHER';
+  }
+}
+
+// FAQ
+const CC={General:'#00f3ff','Agent Mode':'#ffd700',Qwen:'#00ff88','New Models':'#ff6b9d','API & Auth':'#ffd700',Features:'#9b59b6',Security:'#e74c3c',Context:'#4fc3f7',Setup:'#ff7000',PWA:'#00bcd4',Coding:'#ff7000',Background:'#ffd700','Whisper.js STT':'#c07de8',TTS:'#c07de8',Workspace:'#9b59b6','Open Source':'#00ff88','Browser Agent':'#00bcd4'};
+const FAQS=[
+  {c:'General',q:'What is AETHER?',a:'An open-source AI interface running in three browser files — no server, no account, no cost. Connect 22 AI providers or local models. GPL-3.0. Competes with OpenClaw and proprietary interfaces.'},
+  {c:'General',q:'Does AETHER require a server?',a:'No — except the optional Browser Automation feature (Browser Use/Playwright) which needs a local Python server. Agent Mode, chat, tools, workspace, coding, STT, TTS, background tasks all run 100% in the browser.'},
+  {c:'General',q:'Is AETHER really free?',a:'Yes. GNU GPL v3.0. The only costs are cloud AI API calls. Local models (Qwen3.5, Qwen3, Nano Banana) run completely free on your hardware.'},
+  {c:'General',q:'Which browsers are supported?',a:'All modern browsers. Chrome/Edge 86+ recommended for: PWA install, File System Access API (workspace), Whisper.js offline STT (WebGPU), and one-click download.'},
+  {c:'General',q:'How is AETHER different from Open WebUI?',a:'AETHER needs no backend server at all — it\'s three files. Open WebUI requires a Python server and Docker. AETHER also has Agent Mode v1, Coding Mode with deploy, Background Mode with push notifications, AES-256 key encryption, and Whisper.js offline STT.'},
+  {c:'General',q:'Is there a mobile app?',a:'Planned for Q4 2026 via Capacitor. For now: open index.html in Chrome/Safari on mobile, or use Add to Home Screen for a near-native experience.'},
+  {c:'General',q:'How many providers does AETHER support?',a:'22: Qwen, DeepSeek, Local, OpenAI, Anthropic, Google Gemini, Groq, xAI, Mistral, Cohere, OpenRouter, Kimi, Together, SiliconFlow, Perplexity, Meta AI, Copilot, Veo, Moondream2, FLUX.2, Nano Banana, Fireworks, and Custom.'},
+  {c:'General',q:'What is \'No telemetry\' and what does it mean?',a:'AETHER sends zero analytics, usage data, or crash reports to any server. The only external requests are to the AI API endpoints you configure and CDN libraries (KaTeX, Mermaid) loaded lazily when needed.'},
+  {c:'General',q:'Can I self-host AETHER?',a:'Yes — just copy the three files to any static file server. GitHub Pages, Cloudflare Pages, Netlify, or even <code>npx serve .</code> on your laptop. No backend needed.'},
+  {c:'General',q:'Is the comparison table fair?',a:'We\'ve tried to be accurate. OpenClaw is genuinely open-source and privacy-respecting with no telemetry. We differ mainly in architecture (AETHER needs no server) and preferred models. We updated any inaccuracies in v5.14.'},
+  {c:'Agent Mode',q:'What is Agent Mode?',a:'Click AGENT in the toolbar. AETHER breaks your goal into steps and executes them autonomously using tools: Plan → Act → Evaluate → Retry. Each step is a separate API call with live logging. Stops when goal is achieved or limits are reached.'},
+  {c:'Agent Mode',q:'How do I use Agent Mode?',a:'Click the AGENT toolbar button. Enter your goal in natural language, set Max Steps (1–30) and Approval mode (Auto or Per Step). AETHER handles the rest. Use Qwen3.5 or DeepSeek local to run agent tasks for free.'},
+  {c:'Agent Mode',q:'What is \'per step\' approval?',a:'When approval is set to \'Per Step\', AETHER shows a confirmation dialog before each step, showing what it\'s about to do. Choose \'Continue\' or \'Stop Agent\'. Good for sensitive tasks where you want oversight.'},
+  {c:'Agent Mode',q:'How many API calls does Agent Mode use?',a:'One per step, plus any tool calls. A 10-step agent = 10+ API calls. With a local model (Qwen3.5 on llama.cpp), this is completely free. With a cloud API (GPT-5.4), watch your costs — set a low Max Steps limit.'},
+  {c:'Agent Mode',q:'What tools can the agent use?',a:'All 17 registered tools: web_search, scrape, crawl, get_weather, slack_post, slack_read, notion_query, notion_add, hue_lights, hue_set, jira_search, jira_create, gitlab_issues, gitlab_mr, read_file, calculate, browser_agent.'},
+  {c:'Agent Mode',q:'Can the agent stop itself?',a:'Yes — AETHER outputs <code>&lt;agent:done&gt;summary&lt;/agent:done&gt;</code> when it determines the goal is complete. The agent also stops automatically if max steps or tool budget is exceeded.'},
+  {c:'Agent Mode',q:'How do I stop the agent mid-run?',a:'Click the red ■ Stop button in the agent log block. Or click the AGENT toolbar button again (it acts as a toggle when the agent is running).'},
+  {c:'Agent Mode',q:'What models work best for Agent Mode?',a:'DeepSeek Reasoner and Qwen3.5-35B-A3B for cloud. Qwen3.5-9B or Qwen3-32B locally. The agent needs good instruction-following and tool-calling capability — stronger models = more reliable execution.'},
+  {c:'Agent Mode',q:'Does Agent Mode save results?',a:'Yes — when the agent completes, it saves the conversation (including all steps and tool results) to the current conversation. Results from background agent tasks also appear inline in chat.'},
+  {c:'Agent Mode',q:'What\'s planned for Agent Mode v2?',a:'Persistent memory between steps using workspace files. Resume interrupted tasks. Cross-session memory via WORKSPACE.md. Planned for Q3 2026.'},
+  {c:'Qwen',q:'Why is Qwen 3.5 preferred?',a:'262K native context via Gated DeltaNet hybrid architecture, adaptive thinking via native &lt;think&gt; tags, Early Fusion multimodality, and MoE efficiency. The 9B model fits in 6GB VRAM in Q4 — free and private.'},
+  {c:'Qwen',q:'What is the Qwen 3.5-4B model?',a:'New in v5.14. 262K context, adaptive thinking, multimodality. Roughly 3GB VRAM in Q4_K_M — ideal for mid-range GPUs like RTX 3060/4060.'},
+  {c:'Qwen',q:'How do I run Qwen 3.5 locally?',a:'<pre>./llama-server -m Qwen3.5-9B-Instruct-Q4_K_M.gguf --port 8080 -c 65536</pre>Or: <code>ollama run qwen3.5:9b-instruct</code>. AETHER auto-connects to localhost:8080.'},
+  {c:'Qwen',q:'What is Gated DeltaNet?',a:'Linear-attention O(n) via fixed state matrix (vs standard O(n²) softmax). GDN layers interleaved with full-softmax in a 3:1 ratio. Result: 262K context at a fraction of normal VRAM.'},
+  {c:'Qwen',q:'What does enable_thinking do?',a:'<code>enable_thinking: true</code> activates Qwen3.5\'s internal reasoning, producing &lt;think&gt; blocks before the answer. AETHER auto-injects this. You see the model\'s reasoning stream in a collapsible block.'},
+  {c:'Qwen',q:'Where do I get Qwen 3.5 GGUF files?',a:'HuggingFace: search \'Qwen3.5-9B-Instruct-GGUF\' — bartowski or Qwen-team repos. Q4_K_M for best quality/size balance.'},
+  {c:'Qwen',q:'What\'s the difference between Qwen 3 and 3.5?',a:'Qwen 3 = dense transformer, 128K context. Qwen 3.5 = GDN hybrid, 262K context, early fusion multimodality, better efficiency. Both are ★ preferred in AETHER.'},
+  {c:'Qwen',q:'Does Qwen3.5 support images?',a:'Yes — Qwen 3.5 has Early Fusion multimodality (vision+text co-trained from layer 0). AETHER supports image uploads for vision-capable models via the attachment button.'},
+  {c:'New Models',q:'What is Veo?',a:'Google\'s video generation model (Veo 2.0). Accessible via Google\'s Generative AI API. Endpoint auto-configured when you select Veo provider. Requires a Google Cloud API key.'},
+  {c:'New Models',q:'What is Moondream2?',a:'A 2B-parameter vision model optimised for on-device inference. Lightweight multimodal model — describe images, answer visual questions. Accessible via api.moondream.ai or run locally.'},
+  {c:'New Models',q:'What is FLUX.2?',a:'Image generation model by Black Forest Labs. Accessible via api.bfl.ml. Models: flux-pro-1.1, flux-dev, flux-schnell, flux-2.0. Select FLUX.2 in the provider grid and enter your BFL API key.'},
+  {c:'New Models',q:'What is Nano Banana?',a:'An edge AI inference engine. Designed for running small models locally with minimal resources. Default endpoint: localhost:11434 (Ollama-compatible). Models: nano-banana, nano-banana-instruct, banana-2b.'},
+  {c:'New Models',q:'How do I use FLUX.2 for image generation?',a:'Select FLUX.2 in the provider grid, enter your BFL API key. Then ask AETHER to generate an image: \'Generate an image of...\' AETHER sends the request to the FLUX API and displays the result inline.'},
+  {c:'New Models',q:'How do I run Moondream2 locally?',a:'<pre>pip install moondream python -m moondream.server --port 8080</pre>Or use the cloud endpoint at api.moondream.ai with an API key from their website.'},
+  {c:'New Models',q:'Can Veo generate long videos?',a:'Veo 2.0 generates short video clips. Veo 3.0 (also supported) extends duration. These are cutting-edge generative video models — latency and quota limits apply per Google\'s API terms.'},
+  {c:'New Models',q:'What\'s the context window for the new models?',a:'Moondream2: 8,192 tokens. Nano Banana: 32,768 tokens. FLUX.2: 2,048 tokens (image prompt). Veo: not a chat model — uses Google\'s video generation API format.'},
+  {c:'API & Auth',q:'Why am I getting HTTP 401 from Gemini?',a:'Gemini needs <code>?key=YOUR_KEY</code> as a URL param — not a Bearer header. AETHER auto-detects Gemini and appends the key to the URL. If you see 401, check you\'ve selected \'Google\' as provider (not Custom).'},
+  {c:'API & Auth',q:'How does Anthropic auth work?',a:'AETHER auto-detects: <code>x-api-key</code> + <code>anthropic-version: 2023-06-01</code> headers, Anthropic SSE parsing, <code>input_schema</code> tool format, alternating roles. No manual config needed.'},
+  {c:'API & Auth',q:'How do I use OpenRouter?',a:'Select OpenRouter. AETHER auto-injects <code>HTTP-Referer</code> and <code>X-Title</code>. Use model strings like <code>anthropic/claude-4-6-sonnet</code> or <code>qwen/qwen3.5-9b-instruct</code>.'},
+  {c:'API & Auth',q:'Can I use a custom endpoint?',a:'Yes — select Custom, enter your endpoint URL. Works with any OpenAI-compatible server (LM Studio, Jan, llamafile, LocalAI, etc.).'},
+  {c:'API & Auth',q:'What is the authHeader field?',a:'Lets you specify custom auth. Format: <code>X-Custom-Header: value</code>. Overrides auto-detected auth.'},
+  {c:'API & Auth',q:'Can I switch providers mid-conversation?',a:'Yes — change via SETUP any time. The new provider applies from the next message. Useful for testing which model handles a task better.'},
+  {c:'API & Auth',q:'How do I use Together AI?',a:'Select Together, enter your Together API key. Models auto-suggest Qwen3-8B, Llama-4-Maverick, DeepSeek-V3. Together runs open models on fast infrastructure.'},
+  {c:'API & Auth',q:'Does AETHER support streaming?',a:'Yes — enabled by default. Responses stream token-by-token in real time. Toggle in CFG → Streaming if you need batch mode (useful for some API rate limits).'},
+  {c:'Features',q:'What is Deep Research mode?',a:'Click ⚛ DEEP. Multi-step pipeline: query decomposition → web_search → Firecrawl scrape → DB queries → synthesis. Prefers deepseek-reasoner, qwen3.5-35b-a3b. Suggests model switch if suboptimal.'},
+  {c:'Features',q:'How does tool calling work?',a:'Three syntax parsers on every AI response: JSON blocks, XML tags, shorthand ([[tool: arg]]). Native OpenAI tool_calls arrays also handled. 17 tools registered.'},
+  {c:'Features',q:'What is Adaptive Thinking?',a:'Live &lt;think&gt; streaming with token counter. Collapsible block. Toggle in CFG → Show Thoughts. Qwen3.5/DeepSeek: API param. Others: raw tag parsing.'},
+  {c:'Features',q:'What TTS engines are available?',a:'Browser Web Speech API (free), Kokoro 82M on-device (HuggingFace Transformers.js, auto-downloads), Piper local server. Speaker icon appears when active.'},
+  {c:'Features',q:'What is Firecrawl?',a:'Structured web scraping tool (firecrawl.dev). Free 500 credits/month. Adds scrape and crawl tools. Not required for any other feature.'},
+  {c:'Features',q:'Can I use multiple AI conversations at once?',a:'Yes — Dual Context mode lets you run two conversations simultaneously with different provider configs. Useful for comparing models or running parallel research.'},
+  {c:'Features',q:'What integrations does AETHER support?',a:'Firecrawl, Tavily/Brave/Serper (web search), Slack, Notion, Jira Cloud, GitLab, Philips Hue, OpenWeatherMap, Microsoft 365, Google Workspace. Configure in HOOKS modal.'},
+  {c:'Features',q:'What is the Piston API for code execution?',a:'piston.run — free, open-source remote code execution. Supports 50+ languages (Python, Rust, Go, C, Ruby, etc.). AETHER\'s Run button sends code to Piston. No API key needed.'},
+  {c:'Whisper.js STT',q:'What is Whisper.js?',a:'OpenAI Whisper running entirely in the browser via HuggingFace Transformers.js. Uses WebGPU (falls back to WASM). No API key, no server. First use downloads ~300MB model, then fully offline.'},
+  {c:'Whisper.js STT',q:'How do I enable Whisper.js?',a:'HOOKS → Speech-to-Text → Engine → Whisper.js (Offline) → Save Hooks. The mic button activates. No API key or URL needed.'},
+  {c:'Whisper.js STT',q:'What browsers support Whisper.js WebGPU?',a:'Chrome 113+, Edge 113+, and Chrome Android 113+. Safari 17.4+ supports WebGPU experimentally. AETHER falls back to WebAssembly (WASM) if WebGPU is unavailable — works everywhere, just slower.'},
+  {c:'Whisper.js STT',q:'How accurate is Whisper.js?',a:'Comparable to OpenAI Whisper base.en model. Excellent for English. For other languages, Whisper multilingual models are larger but available. For best accuracy in other languages: use OpenAI Whisper API or Google Cloud.'},
+  {c:'Whisper.js STT',q:'Does the Whisper.js model persist between sessions?',a:'Yes — the browser caches the model in the OPFS (Origin Private File System) or Cache Storage. After the first ~300MB download, it loads instantly from cache on subsequent sessions.'},
+  {c:'Whisper.js STT',q:'Which STT engine should I use?',a:'Offline + zero setup: Whisper.js. Best multilingual + offline: Vosk. Best accuracy: OpenAI Whisper API. Zero setup cloud: Browser API. Custom local server: Whisper.cpp.'},
+  {c:'Coding',q:'What is Coding Mode?',a:'Click ⌨ CODE. Code fences become interactive dev environments: Copy, Run (Piston), Preview (iframe), Deploy (blob URL), Console (JS eval + iframe bridge), Fix (AI-assisted), Save (workspace).'},
+  {c:'Coding',q:'How do I name a code block?',a:'Use <code>lang:filename.ext</code> syntax: <code>```python:src/utils.py</code> or <code>```javascript:app.js</code>. Filename shown in gold in the block header.'},
+  {c:'Coding',q:'How does blob deploy work?',a:'Click Deploy on HTML/JS/CSS blocks. AETHER creates a blob URL and opens in a new tab. Valid 60 seconds. For persistent: <code>npx serve .</code> or <code>python3 -m http.server 3000</code>.'},
+  {c:'Coding',q:'What is the local Console?',a:'Embedded JS console per code block. Eval any expression, intercept console.log/error/warn. When Preview iframe is open, runtime errors bridge automatically to the console.'},
+  {c:'Coding',q:'Can AETHER run Python?',a:'Yes via Piston API (free). Click Run. For JS, local console evaluates in-browser without API. For other languages: Piston supports Rust, Go, C, C++, Ruby, PHP, Java, and 40+ more.'},
+  {c:'Coding',q:'How does the AI Fix button work?',a:'Pastes the code block into the input with a structured fix prompt: the code, the error/issue description, and instructions to show only the corrected version. Submit to get the fix.'},
+  {c:'Background',q:'What is Background Mode?',a:'Click BG toolbar button. Queue tasks — Deep Research, Summarise, Timed Reminder — that run while you work. Browser push notification when done. Results saved to conversation.'},
+  {c:'Background',q:'How do push notifications work?',a:'Browser Notifications API — no external server. Permission requested on first task. Clicking notification focuses AETHER and shows the result.'},
+  {c:'Background',q:'Can I queue multiple tasks?',a:'Yes. Tasks run sequentially. All queued/running/done tasks visible in the BG panel with status indicators. Click \'Clear done\' to clean up.'},
+  {c:'Background',q:'Does Background Mode work when AETHER is closed?',a:'No — AETHER must be open in a browser tab. The tasks run in the background relative to your current work, but the tab must remain open. For true background execution, use a server-side agent.'},
+  {c:'Background',q:'What happens to Background Mode results?',a:'Deep Research results save to the current conversation as an assistant message. Click \'View\' in the BG panel to insert into active chat. Summaries show inline in the task panel.'},
+  {c:'Security',q:'How are API keys stored?',a:'AES-256-GCM encrypted using PBKDF2-SHA256 (100,000 iterations). Stored as base64(ciphertext) + IV + salt. Never logged. Never sent anywhere except your configured API endpoint.'},
+  {c:'Security',q:'Does AETHER send any telemetry?',a:'Zero. No analytics, no crash reports. Only external requests: your configured AI endpoints, and CDN libraries (KaTeX, Mermaid, Transformers.js) loaded lazily when needed.'},
+  {c:'Security',q:'What if I forget my encryption password?',a:'No recovery. Clear localStorage: DevTools → Application → Local Storage → Clear All. You\'ll need to re-enter all API keys.'},
+  {c:'Security',q:'Can I use AETHER without encryption?',a:'Yes — password is optional. Without it, keys stored plaintext in localStorage. Fine for personal devices; avoid on shared computers.'},
+  {c:'Security',q:'What data does Whisper.js access?',a:'Whisper.js only accesses your microphone when you press the record button. Audio is processed locally and never sent to any server. The model itself is downloaded from HuggingFace CDN but runs entirely in your browser.'},
+  {c:'Security',q:'Is the browser_agent tool safe?',a:'The browser agent runs on your local machine via the Python backend server. It can access any site your browser can access. Only enable it and queue tasks you trust. AETHER sends the task string to localhost:7860 — your local server.'},
+  {c:'Context',q:'What is the context window?',a:'Default 8,000 tokens. Models with known limits auto-use them (Qwen3.5 → 262,144; Claude 4.6 → 1M). Override in SVCS → Context Limit.'},
+  {c:'Context',q:'What is the Workspace?',a:'File system attached to AETHER. Only a manifest in context — files loaded on demand via read_file tool. FS mode (real folder) or Virtual (IndexedDB).'},
+  {c:'Context',q:'What is SYSTEM_PROMPT.mmd?',a:'Place in workspace to override system prompt. Sections: ## IDENTITY, ## BEHAVIOR, ## CONSTRAINTS, ## CONTEXT. Injected into every API call.'},
+  {c:'Context',q:'What happens when WORKSPACE.md fills up?',a:'At ~60 lines / 12KB, AETHER auto-archives to ARCHIVES.md and resets WORKSPACE.md. No data lost.'},
+  {c:'Context',q:'How does lazy context loading work?',a:'The workspace manifest (filename + size + short excerpt) goes in the system prompt. Full file content is only loaded when the read_file tool is explicitly called — saving thousands of context tokens per conversation.'},
+  {c:'Setup',q:'How do I set up AETHER from scratch?',a:'1. Open index.html. 2. 8-step onboarding wizard runs. 3. SETUP → select provider → enter API key → select model. 4. Start chatting. That\'s it.'},
+  {c:'Setup',q:'How do I redo the onboarding wizard?',a:'DevTools → Application → Local Storage → delete <code>aether_onboarding_done</code> → reload.'},
+  {c:'Setup',q:'How do I set up Slack?',a:'Create Slack App at api.slack.com. Add scopes: chat:write, channels:history, channels:read. Install to workspace. Copy Bot Token → HOOKS → Slack Token → Save.'},
+  {c:'Setup',q:'How do I set up Notion?',a:'Create integration at notion.so/my-integrations. Copy Integration Token. Share target database with integration. Get Database ID from URL (UUID before ?v=) → HOOKS.'},
+  {c:'Setup',q:'How do I set up Jira?',a:'Generate token at id.atlassian.com/manage-profile/security/api-tokens. HOOKS: Jira URL = https://yourco.atlassian.net, Email = your@email.com, Token = ATATT3xFf...'},
+  {c:'PWA',q:'How do I install AETHER as an app?',a:'Serve over HTTPS → Chrome/Edge install icon in address bar. iOS: Safari → Share → Add to Home Screen. Android: Chrome → menu → Install App.'},
+  {c:'PWA',q:'Does AETHER work offline?',a:'App shell cached by service worker — works offline. AI API calls need network. CDN libraries (KaTeX, Mermaid) cached after first use.'},
+  {c:'PWA',q:'What is the service worker strategy?',a:'Core files: stale-while-revalidate. CDN libraries: cache-first. AI API and localhost: bypass (never cached).'},
+  {c:'PWA',q:'Can I use AETHER as a desktop app?',a:'Yes via PWA install (Chrome/Edge). For a proper desktop app: planned Electron/Capacitor wrapper for Q4 2026.'},
+  {c:'PWA',q:'What are the PWA shortcuts?',a:'Install AETHER → right-click icon → \'New Chat\' or \'Deep Research\' shortcuts available. Defined in manifest.json.'},
+  {c:'Open Source',q:'How do I contribute?',a:'Fork → change script.js/style.css/index.html → test with Qwen3.5 local + one cloud API → PR. All contributions GPL-3.0.'},
+  {c:'Open Source',q:'Can I build a commercial product on AETHER?',a:'Yes — GPL-3.0 allows commercial use. Open-source your AETHER modifications under GPL-3.0. You can charge for services without releasing service configs.'},
+  {c:'Open Source',q:'Why GPL-3.0 and not MIT?',a:'Copyleft ensures improvements stay open. MIT would allow proprietary forks that don\'t contribute back. AETHER should benefit everyone.'},
+  {c:'Open Source',q:'Is there a community?',a:'GitHub Discussions at github.com/architect-brad/AETHER.AI. Issues for bugs and feature requests. PRs always welcome.'},
+  {c:'Open Source',q:'How often is AETHER updated?',a:'Active development. Major versions roughly monthly. Bugfix releases as needed. Follow the GitHub repo for notifications.'},
+  {c:'Workspace',q:'What are the workspace power features?',a:'File Diff (side-by-side, color-coded), Multi-file Search (regex across all files with highlighted matches), Templates (Python, Web App, Research, Writing scaffolds).'},
+  {c:'Workspace',q:'How do I apply a project template?',a:'Workspace modal → Templates → choose type → AETHER writes CORE_LOGIC.md, WORKSPACE.md, USER.md for your project type.'},
+  {c:'Workspace',q:'What is the diff viewer?',a:'Side-by-side comparison of any two workspace files. Shows changed lines (gold), added lines (green), removed lines (red), with total changed line count.'},
+  {c:'Workspace',q:'What files are created by default?',a:'CORE_LOGIC.md (conventions), WORKSPACE.md (current sprint), ARCHIVES.md (old context), USER.md (your preferences), ENCRYPT.md (security config). Templates add project-specific content.'},
+  {c:'Workspace',q:'How does multi-file search work?',a:'Live regex search across all workspace files simultaneously. Results show file name, line number, and highlighted match text. Updates as you type (220ms debounce).'},
+];
+
+const cats=[...new Set(FAQS.map(f=>f.c))];
+const ce=document.getElementById('fcats');
+let aC='All',srch='';
+function mCB(l,all=false){const b=document.createElement('button');b.className='fcat'+(all?' on':'');b.textContent=l;b.onclick=()=>{aC=l;document.querySelectorAll('.fcat').forEach(x=>x.classList.remove('on'));b.classList.add('on');aF();};return b;}
+ce.appendChild(mCB('All',true));cats.forEach(c=>ce.appendChild(mCB(c)));
+window.filtFaq=q=>{srch=q.toLowerCase();aF();};
+function aF(){let v=0;document.querySelectorAll('.fitem').forEach((el,i)=>{const f=FAQS[i];const mc=aC==='All'||f.c===aC;const ms=!srch||f.q.toLowerCase().includes(srch)||f.a.toLowerCase().includes(srch);el.classList.toggle('hidden',!(mc&&ms));if(mc&&ms)v++;});document.getElementById('fempty').style.display=v===0?'block':'none';}
+const fl=document.getElementById('flist');
+FAQS.forEach((f,i)=>{
+  const col=CC[f.c]||'#00f3ff';
+  const el=document.createElement('div');el.className='fitem';
+  el.innerHTML=`<button class="fq" onclick="tF(this,${i})"><span>${f.q}</span><div style="display:flex;align-items:center;gap:5px;flex-shrink:0"><span class="fctag" style="background:${col}14;color:${col};border:1px solid ${col}25">${f.c}</span><span class="farr">▾</span></div></button><div class="fans"><div class="fans-inner">${f.a}</div></div>`;
+  fl.appendChild(el);
+});
+window.tF=(btn,i)=>{
+  const a=btn.nextElementSibling;
+  const isOpen=btn.classList.toggle('on');
+  a.style.maxHeight=isOpen?a.querySelector('.fans-inner').scrollHeight+'px':'0';
+  if(isOpen) setTimeout(()=>a.scrollIntoView({behavior:'smooth',block:'nearest'}),320);
+};
+</script>
+</body>
+                                                                                                                                                                             </html>
