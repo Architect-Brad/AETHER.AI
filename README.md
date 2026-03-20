@@ -1,287 +1,172 @@
-<div align="center">
+# ⬡ AETHER Neural Interface
 
-```
-    ╔═══════════════════════════════════════════════════════╗
-    ║  ⬡  A E T H E R   N E U R A L   I N T E R F A C E  ║
-    ║                      v 5 . 1 4                        ║
-    ╚═══════════════════════════════════════════════════════╝
-```
+> Open-source AI — no backend, no account, no cost. GPL-3.0.
 
-**Open-source AI interface built to compete with OpenClaw.**
-Fully local. Fully open. No compromises. No backend.
-
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-00f3ff.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
-[![Version](https://img.shields.io/badge/version-5.14-00ff88.svg?style=flat-square)](https://github.com/architect-brad/AETHER.AI/releases)
-[![Status](https://img.shields.io/badge/status-active-00ff88.svg?style=flat-square)](#)
-[![Preferred AI](https://img.shields.io/badge/preferred-Qwen%203.5%20%E2%AC%A1-00ff88.svg?style=flat-square)](#qwen-35--qwen-3-native-support)
-
-[**Launch App**](https://architect-brad.github.io/AETHER.AI/) · [**Documentation**](https://architect-brad.github.io/AETHER.AI/site.html) · [**Report Bug**](https://github.com/architect-brad/AETHER.AI/issues)
-
-</div>
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Providers](https://img.shields.io/badge/Providers-22-00f3ff)]()
+[![Qwen 3.5](https://img.shields.io/badge/Qwen3.5-262K_ctx-00ff88)]()
+[![Agent Mode](https://img.shields.io/badge/Agent_Mode-v2-ffd700)]()
 
 ---
 
-## What is AETHER?
+```
+git clone https://github.com/architect-brad/AETHER.AI.git
+cd AETHER.AI && open index.html
+```
 
-AETHER is a precision AI interface that runs entirely in the browser — three files, zero backend, zero telemetry. Connect any OpenAI-compatible API, run local models, or use cloud providers. Built to compete directly with OpenClaw while remaining fully free under GPL-3.0.
-
-**Why AETHER over alternatives?**
-
-| Feature | AETHER | Typical alternatives |
-|---------|--------|---------------------|
-| **Backend required** | ❌ None | ✅ Required |
-| **API key encryption** | AES-256-GCM | Plaintext / none |
-| **Qwen 3.5 native** | Full (262K, thinking) | Partial / none |
-| **Tool calling** | 16 tools, 3 syntaxes | 0–5 tools |
-| **Local model support** | llama.cpp, Ollama, vLLM | Limited |
-| **License** | GPL-3.0 free | Proprietary |
-| **File count** | 3 | Many |
+**That's it. Three files. No server.**
 
 ---
 
-## ⚡ Quick Start
+## Features at a Glance
 
-### Option 1 — Local model (free, private)
+| Feature | Status |
+|---------|--------|
+| Agent Mode v2 (plan→act→evaluate→retry + persistent workspace memory) | ✅ v5.14 |
+| Whisper.js offline STT (WebGPU, no API key) | ✅ v5.14 |
+| FLUX.2 image generation (inline display + inpainting) | ✅ v5.14 |
+| Call Mode — "AETHER Calling" voice check-ins | ✅ v5.14 |
+| Background scheduled tasks (daily/weekly recurring) | ✅ v5.14 |
+| Location awareness (GPS + Nominatim geocoding) | ✅ v5.14 |
+| Email sending (browser agent + anonymous mailto) | ✅ v5.14 |
+| Animated loading states (7 cycling icons) | ✅ v5.14 |
+| 22 providers (incl. Veo, Moondream2, FLUX.2, Nano Banana) | ✅ v5.14 |
+| Qwen 3.5 native — 262K ctx, adaptive thinking | ✅ v5.13 |
+| Browser automation (Browser Use + Playwright) | ✅ v5.13 |
+| AES-256-GCM encrypted keys | ✅ v5.x |
+| 17 built-in tools (3 syntaxes) | ✅ v5.x |
+
+---
+
+## Quick Start
 
 ```bash
-# Download Qwen3.5-9B GGUF
-wget https://huggingface.co/bartowski/Qwen_Qwen3.5-9B-Instruct-GGUF/resolve/main/Qwen3.5-9B-Instruct-Q4_K_M.gguf
+# Local — Qwen 3.5 (free, private, 262K context)
+./llama-server -m Qwen3.5-9B-Instruct-Q4_K_M.gguf --port 8080 -c 65536
 
-# Start llama.cpp server
-./llama-server -m Qwen3.5-9B-Instruct-Q4_K_M.gguf --port 8080 -c 65536 --mlock
+# Or with Ollama
+ollama pull qwen3.5:9b-instruct && ollama serve
 
-# Or use Ollama
-ollama run qwen3.5:9b-instruct
+# Or cloud — just open AETHER and enter any API key
 ```
-
-Open `index.html` — AETHER connects automatically at `localhost:8080`.
-
-### Option 2 — Cloud API
-
-1. Open AETHER → click **SETUP**
-2. Select your provider from the logo grid
-3. Enter API key → encrypted with AES-256-GCM immediately
-4. Pick a model from the suggestion chips
-5. Click **SAVE CONFIG**
 
 ---
 
-## ⬡ Qwen 3.5 + Qwen 3 Native Support
+## Call Mode
 
-AETHER is purpose-engineered for the Qwen model families — the recommended local-first AI stack.
+AETHER can call you. Click the **CALL** button. A full voice conversation UI opens:
 
-### Qwen 3.5 Series — Gated DeltaNet + Early Fusion
+- Pulsing avatar rings while connecting
+- Context-aware greeting based on your workspace
+- Waveform animation while AETHER speaks
+- Voice recognition for your responses
+- Mute, end, switch-to-chat controls
+- Call transcript saved to conversation
 
-> *"The best small model architecture of 2026"* — Trilogy AI Deep Dive
-
-| Model | Parameters | Active | Architecture | Context | Best For |
-|-------|-----------|--------|-------------|---------|----------|
-| `qwen3.5-0.8b-instruct` | 0.8B | 0.8B | GDN+FFN | 262K | Edge / mobile |
-| `qwen3.5-2b-instruct` | 2B | 2B | GDN+FFN | 262K | Constrained hardware |
-| `qwen3.5-4b-instruct` | 4B | 4B | GDN+FFN | 262K | Balanced |
-| `qwen3.5-9b-instruct` | 9B | 9B | GDN+FFN | 262K | **Recommended** |
-| `qwen3.5-25b-instruct` | 25B | 25B | GDN+FFN | 262K | High quality |
-| `qwen3.5-35b-a3b-instruct` | 35B | **3B** | **MoE 256E/8A** | 262K | Best quality, fast |
-
-**Key capabilities** (all models):
-- **262K native context** via Gated DeltaNet linear-attention architecture
-- **Adaptive Thinking** — native `<think>` tags, enabled via `enable_thinking: true`
-- **Early Fusion multimodality** — vision and text trained together from layer zero
-- **MTP speculative decoding** — auto-injected `num_speculative_tokens: 4`
-- Compatible with: vLLM, llama.cpp GGUF, MLC-LLM, Ollama
-
-### Qwen 3 Base Series
-
-| Model | Context | Notes |
-|-------|---------|-------|
-| `qwen3-0.6b-instruct` | 32K | Ultra-lightweight |
-| `qwen3-1.7b-instruct` | 32K | — |
-| `qwen3-4b-instruct` | 128K | — |
-| `qwen3-8b-instruct` | 128K | Recommended local |
-| `qwen3-14b-instruct` | 128K | — |
-| `qwen3-32b-instruct` | 128K | High quality |
-| `qwen3-235b-a22b-instruct` | 128K | Cloud (Together AI / SiliconFlow) |
+> "AETHER Calling…" browser notification triggers before the UI opens.
 
 ---
 
-## 🔧 Features
-
-### Core Interface
-- **Real-time streaming** with TTFT and TPS metrics
-- **Dual Context** — run two parallel conversations simultaneously
-- **Conversation history** in IndexedDB via localforage
-- **BM25 + Vector RAG** — semantic document retrieval with cosine similarity
-- **KaTeX math rendering** — LaTeX `$inline$` and `$$display$$`
-- **Mermaid diagrams** — flowcharts, sequence diagrams, gantt charts
-- **OCR Vision** — Tesseract.js image text extraction
-- **ASCII 3D Renderer** *(Experimental)* — raymarched SDF scenes with multi-light shading
-- **Canvas Workbench** *(Experimental)* — freehand drawing, annotation, PDF rendering
-
-### AI Integration
-- **12 cloud providers** with official SVG logos and auto-endpoint configuration
-- **Anthropic native** — `x-api-key` header, extended thinking, tool use with `input_schema`
-- **Google Gemini** — `?key=` query parameter auth (not Bearer), OpenAI-compat endpoint
-- **OpenRouter** — auto-injects `HTTP-Referer` and `X-Title` headers
-- **Adaptive Thinking** — live `<think>` streaming with token counter
-
-### ⚛ Deep Research Mode
-Multi-step reasoning chains using DeepSeek Reasoner or Qwen3.5 as preferred models:
-1. Query decomposition via extended chain-of-thought
-2. Automatic tool dispatch (web search → scrape → database query)
-3. Synthesis with structured, cited output
-4. Cross-verification by reasoning model
-
-### 🛠 Tool Calling Engine
-16 built-in tools, 3 syntax parsers, OpenAI function-call dispatch:
+## Agent Mode v2
 
 ```
-web_search      scrape          crawl           get_weather
-slack_post      slack_read      notion_query    notion_add
-hue_lights      hue_set         jira_search     jira_create
-gitlab_issues   gitlab_mr       read_file       calculate
+AGENT → enter goal → set steps → run
+
+AETHER:
+  ⟨agent:plan⟩
+  1. gitlab_issues → fetch open bugs
+  2. prioritise by impact
+  3. browser_agent → create Notion sprint
+  ⟨/agent:plan⟩
+  Step 1/10 — [[gitlab_issues: "AETHER.AI"]]
+  ✓ Found 14 issues
+  Step 2/10 — analysing…
+  Step 3/10 — [[browser_agent: "create sprint in Notion"]]
+  ⟨agent:done⟩Sprint created at notion.so/...⟩/agent:done⟩
 ```
 
-Parses: ` ```tool_call `, `<tool_call name="">`, `[[tool: value]]`
-
-### Integrations (20+)
-
-| Category | Providers |
-|----------|-----------|
-| Search | Tavily, Brave, Serper |
-| Web Scraping | **Firecrawl** (scrape + crawl) |
-| Communication | Slack, Gmail, Outlook |
-| Productivity | Notion, Jira Cloud |
-| Development | GitHub, GitLab |
-| Smart Home | Philips Hue (OpenHue) |
-| Cloud Platforms | Google Workspace, Microsoft 365 |
-| Weather | OpenWeatherMap |
-
-### Security
-- **AES-256-GCM** encryption for all API keys
-- **PBKDF2** key derivation (100,000 iterations)
-- Zero plaintext storage, zero telemetry
-- All processing client-side
-
-### TTS / Voice
-Three engines configurable in HOOKS:
-- **Browser API** — zero setup, basic quality
-- **Kokoro 82M** — on-device via Hugging Face Transformers.js
-- **Piper** — high quality via local server
-
-### Personalization
-8-step onboarding wizard:
-- Name, interests, personality (8 personas: Nova, Sage, Spark, Cipher, Echo, Nexus, Vector, Herald)
-- Response style (Concise/Balanced/Detailed)
-- Preferred AI model selection
-- Privacy & features configuration
-
-Persona shapes every system prompt automatically.
+Each step writes to `WORKSPACE.md` — resume after interruption, full cross-session memory.
 
 ---
 
-## 🏗 Architecture
+## FLUX.2 Image Generation
 
 ```
-AETHER v5.14
-├── index.html    — App shell, SVG sprite, modals (706 lines)
-├── script.js     — All logic, API integration, tools (4200+ lines)
-└── style.css     — Full design system, cyberpunk OLED (3900+ lines)
+"generate an image of a cyberpunk city at sunset"
+
+→ FLUX.2 animated ring loader
+→ Inline image result
+→ Save ↓ | Edit ✏ | Regen ↺
 ```
 
-**Zero runtime dependencies** — everything runs in the browser:
-
-| Layer | Technology |
-|-------|-----------|
-| Storage | localforage (IndexedDB) + localStorage |
-| Crypto | Web Crypto API (AES-256-GCM + PBKDF2) |
-| Rendering | Vanilla DOM + CSS custom properties |
-| Search | BM25 (pure JS) |
-| Math | KaTeX (CDN, lazy) |
-| OCR | Tesseract.js (CDN, lazy) |
-| Diagrams | Mermaid (CDN, lazy) |
-| TTS (optional) | Kokoro 82M via HuggingFace Transformers.js |
+Configure in SETUP → FLUX.2 provider + BFL API key.
 
 ---
 
-## API Providers
+## Background Scheduled Tasks
 
-| Provider | Priority | Auth Method | Notes |
-|----------|----------|-------------|-------|
-| **Qwen (DashScope)** | ★ Preferred | Bearer | Best local pairing |
-| **DeepSeek** | ★ Preferred | Bearer | Best for reasoning |
-| Local (llama.cpp/Ollama) | Default | None | Zero cost |
-| OpenAI | Supported | Bearer | GPT-5 era models |
-| Anthropic | Supported | `x-api-key` | Auto-detected, Claude 4.6 |
-| Google Gemini | Supported | `?key=` param | Auto-detected, Gemini 3 |
-| Groq | Supported | Bearer | Ultra-fast inference |
-| xAI | Supported | Bearer | Grok 4 |
-| Mistral | Supported | Bearer | Large 3 |
-| OpenRouter | Supported | Bearer + Referer | Multi-provider routing |
-| Kimi (Moonshot) | Supported | Bearer | K2.5, 256K context |
-| Custom | Any | Configurable | Any OpenAI-compat endpoint |
+```
+⏰ Schedule → Daily at 08:00:
+"Check RAM prices and write a summary report"
+
+Every morning at 8:00 AM:
+  1. AETHER wakes up in the background
+  2. Runs web_search for RAM prices
+  3. Writes report to WORKSPACE.md + LOGS.md
+  4. Sends push notification: "Morning report ready"
+```
+
+Use cases: price monitoring, Slack digest, Jira review, news summaries.
 
 ---
 
-## Development
+## Architecture
 
-### Running locally
-
-```bash
-# Serve with any static file server
-npx serve .
-# or
-python3 -m http.server 3000
-# or just open index.html directly
 ```
-
-### PWA Installation
-
-```bash
-# Add manifest.json + sw.js to enable offline PWA
-cp manifest.json sw.js /path/to/your/deployment/
+AETHER.AI/
+├── index.html       # UI shell (~773 lines)
+├── script.js        # All logic (~5830 lines)
+├── style.css        # Design system (~4374 lines)
+├── manifest.json    # PWA
+├── sw.js            # Service worker
+├── logo.svg         # Hexagon + lightning bolt
+└── site.html        # Product hub
 ```
-
-### Contributing
-
-1. Fork the repository
-2. Make your changes in `script.js`, `style.css`, or `index.html`
-3. Test against Qwen3.5 local and at least one cloud API
-4. Submit a PR — all contributions must maintain GPL-3.0
 
 ---
 
-## Roadmap
+## Providers (22)
 
-- [ ] Multi-modal image generation (FLUX/SDXL via Puter)
-- [ ] Voice input (Whisper local via Transformers.js)
-- [ ] Plugin system (AETHER Extensions API)
-- [ ] Collaborative sessions (WebRTC)
-- [ ] Mobile app wrapper (Capacitor)
-- [ ] Advanced RAG (vector DB, hybrid retrieval)
-- [ ] Agent mode (autonomous multi-step tasks)
+★ Preferred: Qwen (DashScope), DeepSeek  
+Cloud: OpenAI, Anthropic, Google Gemini, Groq, xAI, Mistral, Cohere, OpenRouter, Kimi, Together AI, SiliconFlow, Perplexity AI, Meta AI, Microsoft Copilot, Fireworks  
+New: Veo (video gen), Moondream2 (vision), FLUX.2 (image gen), Nano Banana (edge AI)  
+Custom: Any OpenAI-compatible endpoint
 
 ---
 
-## License
+## Tool Registry (21)
 
-```
-AETHER Neural Interface
-Copyright (C) 2026  The Architect
-
-GNU General Public License v3.0
-https://www.gnu.org/licenses/gpl-3.0
-```
-
-This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.
+`web_search` `scrape` `crawl` `get_weather` `slack_post` `slack_read` `notion_query` `notion_add` `hue_lights` `hue_set` `jira_search` `jira_create` `gitlab_issues` `gitlab_mr` `read_file` `calculate` `browser_agent` `email_send` `location_get` `image_gen`
 
 ---
 
-<div align="center">
-<br>
-<strong>⬡ AETHER v5.14</strong> · Built by The Architect · GPL-3.0 · Competing with OpenClaw
-<br><br>
-<a href="https://architect-brad.github.io/AETHER.AI/">🌐 Website</a> ·
-<a href="https://architect-brad.github.io/AETHER.AI/site.html">📖 Docs</a> ·
-<a href="https://github.com/architect-brad/AETHER.AI/issues">🐛 Issues</a> ·
-<a href="https://github.com/architect-brad/AETHER.AI/discussions">💬 Discussions</a>
-</div>
+## Auth Auto-Detection
+
+| Provider | Auth Method |
+|----------|-------------|
+| Anthropic | `x-api-key` + `anthropic-version` (auto) |
+| Gemini | `?key=` URL param — never Bearer (auto) |
+| OpenRouter | `HTTP-Referer` + `X-Title` (auto) |
+| All others | `Authorization: Bearer YOUR_KEY` |
+
+---
+
+## Contributing
+
+GPL-3.0. Fork → change → test → PR.
+
+[Issues](https://github.com/architect-brad/AETHER.AI/issues) · [Discussions](https://github.com/architect-brad/AETHER.AI/discussions) · [PRs](https://github.com/architect-brad/AETHER.AI/pulls)
+
+---
+
+*⬡ AETHER — Neural Interface for the open web. GPL-3.0.*
