@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#00f3ff">
-<title>AETHER Neural Interface — Product Hub</title>
+<title>AETHER Neural Interface — Open-Source AI, Agent Mode, 22 Providers</title>
+<meta name="description" content="AETHER is a GPL-3.0 AI interface with Agent Mode, Call Mode, 22 providers, Qwen 3.5 (262K ctx), browser automation, offline Whisper STT — three browser files. No server. No account.">
+<meta name="keywords" content="open source AI, Qwen 3.5, local LLM, AI interface, agent mode, browser automation, GPL-3.0, FLUX.2 image generation">
+<meta name="author" content="The Architect">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://aether-ai-kappa.vercel.app/site.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aether-ai-kappa.vercel.app/site.html">
+<meta property="og:title" content="AETHER Neural Interface — Open-Source AI">
+<meta property="og:description" content="Agent Mode, Call Mode, FLUX.2 images, 22 providers, 262K context, offline STT — three browser files. No server. GPL-3.0.">
+<meta property="og:image" content="https://aether-ai-kappa.vercel.app/logo.svg">
+<meta property="og:site_name" content="AETHER Neural Interface">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AETHER — Open-Source AI Interface">
+<meta name="twitter:description" content="Agent Mode, 22 providers, 262K Qwen3.5, offline STT, browser automation. GPL-3.0.">
+<meta name="twitter:image" content="https://aether-ai-kappa.vercel.app/logo.svg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><polygon points='18,2 33,10 33,26 18,34 3,26 3,10' fill='%23020308' stroke='%2300f3ff' stroke-width='2'/><path d='M15 10l-4 16h4l1-3h4l1 3h4L21 10h-6zm0 10l1.5-5.5L18 20h-3z' fill='%2300f3ff'/></svg>">
+<link rel="apple-touch-icon" href="logo.svg">
+<link rel="manifest" href="manifest.json">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AETHER Neural Interface","description":"Open-source AI interface. No server, no account.","url":"https://aether-ai-kappa.vercel.app/","applicationCategory":"AIApplication","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://www.gnu.org/licenses/gpl-3.0.html","softwareVersion":"5.15"}</script>
 <style>
 :root{--bg:#020308;--s1:#04050c;--cyan:#00f3ff;--green:#00ff88;--gold:#ffd700;--purple:#9b59b6;--red:#e74c3c;--text:#c8d8e8;--dim:#445566;--dimmer:#223344;--border:#0d1525;--mono:'Courier New',Consolas,monospace;--sans:'Segoe UI',system-ui,sans-serif;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -111,6 +130,7 @@ nav{position:sticky;top:0;z-index:9999;background:rgba(2,3,8,.97);border-bottom:
 .comp-table th.hl{color:var(--cyan);background:rgba(0,243,255,.05);border-color:rgba(0,243,255,.14);}
 .comp-table td{padding:6px 10px;border:1px solid #060810;text-align:center;color:var(--dim);}
 .comp-table td:first-child{text-align:left;color:#99aabb;font-family:var(--mono);font-size:.67rem;}
+.comp-table .td-sub{display:block;font-size:.53rem;color:#334455;margin-top:2px;font-weight:400;letter-spacing:0;}
 .comp-table tr:hover td{background:rgba(255,255,255,.01);}
 .yes{color:var(--green);font-weight:700;}.no{color:#2a3540;}.part{color:var(--gold);}
 
@@ -286,22 +306,63 @@ footer{border-top:1px solid var(--border);padding:18px 28px;display:flex;align-i
     <tbody>
       <tr><td>License</td><td class="hl yes">GPL-3.0</td><td class="part">Custom Open</td><td class="no">Proprietary</td><td class="no">Proprietary</td><td class="yes">Apache 2.0</td></tr>
       <tr><td>Backend required</td><td class="hl yes">None</td><td class="no">Yes (Node)</td><td class="no">Yes (server)</td><td class="no">Yes (server)</td><td class="no">Yes (Python)</td></tr>
-      <tr><td>Local model support</td><td class="hl yes">✓ Full</td><td class="yes">✓ Full</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓ Full</td></tr>
-      <tr><td>API key storage</td><td class="hl yes">AES-256-GCM</td><td class="part">Env vars</td><td class="no">Server-side</td><td class="no">Server-side</td><td class="part">Env vars</td></tr>
+      <tr>
+        <td>Local model support</td>
+        <td class="hl yes">✓ Native<span class="td-sub">Ollama / llama.cpp / any OpenAI-compat</span></td>
+        <td class="yes">✓ Native<span class="td-sub">Via Ollama / Localhost</span></td>
+        <td class="no">✗<span class="td-sub">Cloud only</span></td>
+        <td class="no">✗<span class="td-sub">Cloud only</span></td>
+        <td class="yes">✓ Primary<span class="td-sub">Core purpose of the app</span></td>
+      </tr>
+      <tr>
+        <td>API key storage</td>
+        <td class="hl yes">AES-256-GCM<span class="td-sub">Encrypted, zero plaintext</span></td>
+        <td class="yes">✓ Multi-provider<span class="td-sub">Supports multiple keys</span></td>
+        <td class="no">Account-linked<span class="td-sub">No user key management</span></td>
+        <td class="no">Account-linked<span class="td-sub">No user key management</span></td>
+        <td class="yes">✓ OpenAI-compat<span class="td-sub">Standard env/config</span></td>
+      </tr>
+      <tr>
+        <td>Agent Mode</td>
+        <td class="hl yes">✓ Built-in v2<span class="td-sub">Plan→Act→Evaluate→Retry, workspace memory</span></td>
+        <td class="yes">✓ Task-oriented<span class="td-sub">/agent mode, structured tasks</span></td>
+        <td class="yes">✓ /agent mode<span class="td-sub">Code Interpreter + browsing</span></td>
+        <td class="yes">✓ Artifacts<span class="td-sub">Analysis tool + Claude Code</span></td>
+        <td class="yes">✓ Tools/Functions<span class="td-sub">Via function calling</span></td>
+      </tr>
+      <tr>
+        <td>Browser automation</td>
+        <td class="hl yes">Browser Use + PW<span class="td-sub">Full Playwright control</span></td>
+        <td class="yes">✓ Playwright/Skills<span class="td-sub">Visual + headless modes</span></td>
+        <td class="yes">✓ Visual/Headless<span class="td-sub">Native browser tool</span></td>
+        <td class="part">Partial<span class="td-sub">Via MCP / Extensions only</span></td>
+        <td class="yes">✓ fetch_url tool<span class="td-sub">URL fetching built-in</span></td>
+      </tr>
+      <tr>
+        <td>Offline STT</td>
+        <td class="hl yes">Whisper.js + Vosk<span class="td-sub">WebGPU, fully local, no API key</span></td>
+        <td class="no">✗<span class="td-sub">API-based only</span></td>
+        <td class="no">✗<span class="td-sub">Requires internet</span></td>
+        <td class="no">✗<span class="td-sub">Requires internet</span></td>
+        <td class="yes">✓ Local Whisper<span class="td-sub">Local Whisper support</span></td>
+      </tr>
+      <tr>
+        <td>Coding Mode</td>
+        <td class="hl yes">✓ Full dev env<span class="td-sub">Preview, console, deploy, Piston exec</span></td>
+        <td class="yes">✓ Terminal/Shell<span class="td-sub">Full shell access</span></td>
+        <td class="yes">✓ Code Interpreter<span class="td-sub">Sandboxed Python execution</span></td>
+        <td class="yes">✓ Artifacts<span class="td-sub">Live preview + Claude Code</span></td>
+        <td class="yes">✓ Code Editor<span class="td-sub">Integrated editor</span></td>
+      </tr>
       <tr><td>Qwen 3.5 native (262K)</td><td class="hl yes">✓ Full</td><td class="part">Generic only</td><td class="no">✗</td><td class="no">✗</td><td class="part">Generic only</td></tr>
-      <tr><td>Adaptive Thinking stream</td><td class="hl yes">✓ Live</td><td class="no">✗</td><td class="no">✗</td><td class="part">Partial</td><td class="no">✗</td></tr>
-      <tr><td>Agent Mode</td><td class="hl yes">✓ v1 built-in</td><td class="part">Via plugins</td><td class="part">Limited</td><td class="no">✗</td><td class="part">Via plugins</td></tr>
-      <tr><td>Browser automation</td><td class="hl yes">Browser Use + PW</td><td class="no">✗</td><td class="part">Limited</td><td class="no">✗</td><td class="no">✗</td></tr>
+      <tr><td>Adaptive Thinking stream</td><td class="hl yes">✓ Live stream</td><td class="no">✗</td><td class="no">✗</td><td class="part">Partial</td><td class="no">✗</td></tr>
       <tr><td>Tool calling</td><td class="hl yes">21 tools, 3 syntaxes</td><td class="part">Some</td><td class="part">Some</td><td class="part">Some</td><td class="part">Basic</td></tr>
-      <tr><td>Offline STT</td><td class="hl yes">Whisper.js + Vosk</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="part">Limited</td></tr>
-      <tr><td>Coding Mode + Console</td><td class="hl yes">✓ Full dev env</td><td class="part">Basic</td><td class="no">✗</td><td class="no">✗</td><td class="part">Basic</td></tr>
-      <tr><td>Background tasks</td><td class="hl yes">✓ + push notif</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
-      <tr><td>Workspace memory</td><td class="hl yes">FS + diff + search</td><td class="part">Basic</td><td class="no">✗</td><td class="no">✗</td><td class="part">Basic</td></tr>
+      <tr><td>Background tasks</td><td class="hl yes">✓ + scheduled</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
       <tr><td>Telemetry</td><td class="hl yes">None</td><td class="yes">None</td><td class="no">Extensive</td><td class="no">Extensive</td><td class="part">Optional</td></tr>
-      <tr><td>Multi-modal (image+text)</td><td class="hl part">Via Moondream2</td><td class="part">Via API</td><td class="yes">✓ Native</td><td class="yes">✓ Native</td><td class="part">Via API</td></tr>
+      <tr><td>Multi-modal</td><td class="hl part">Via Moondream2</td><td class="part">Via API</td><td class="yes">✓ Native</td><td class="yes">✓ Native</td><td class="part">Via API</td></tr>
     </tbody>
   </table></div>
-  <p style="font-family:var(--mono);font-size:.57rem;color:#334;margin-top:10px">OpenClaw: open-source, privacy-respecting, no telemetry — genuine competition. We differ primarily in architecture (AETHER needs no server) and preferred models.</p>
+  <p style="font-family:var(--mono);font-size:.57rem;color:#334455;margin-top:10px">Data verified March 2026. OpenClaw: open-source, privacy-respecting, strong local model support — genuine alternative. ChatGPT and Claude.ai are cloud-only but have strong native agent and multimodal capabilities. Open WebUI excels as a local model frontend. AETHER differs in requiring no server whatsoever and shipping unique features like Whisper.js offline STT, Call Mode, and persistent workspace memory.</p>
 </div></section>
 <hr class="divider">
 
@@ -1184,4 +1245,4 @@ window.tF=(btn,i)=>{
 };
 </script>
 </body>
-                                                                                                                                                                             </html>
+</html>
